@@ -29,10 +29,6 @@ public class MainActivity extends Activity {
     String[] animals = getResources().getStringArray(R.array.animals);
     mAdapter.addAll(animals);
     mRecyclerView.setAdapter(mAdapter);
-    setUpRecycler();
-  }
-
-  private void setUpRecycler() {
     int orientation;
     if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
       orientation = LinearLayoutManager.VERTICAL;
@@ -40,12 +36,6 @@ public class MainActivity extends Activity {
       orientation = LinearLayoutManager.HORIZONTAL;
     }
     mRecyclerView.setLayoutManager(new LinearLayoutManager(this, orientation, false));
-    if (mDividersDecor != null) {
-      mRecyclerView.removeItemDecoration(mDividersDecor);
-    }
-    if (mHeadersDecor != null) {
-      mRecyclerView.removeItemDecoration(mHeadersDecor);
-    }
     mDividersDecor = new DividerDecoration(this);
     mHeadersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
     mRecyclerView.addItemDecoration(mDividersDecor);
@@ -85,5 +75,4 @@ public class MainActivity extends Activity {
       textView.setText(String.valueOf(getItem(position).charAt(0)));
     }
   }
-
 }
