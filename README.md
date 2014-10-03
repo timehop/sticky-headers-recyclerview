@@ -9,7 +9,9 @@ a library that many of us relied on for sticky headers in our listviews.
 
 Here is a quick video of it in action (click to see the full video):
 
-[![animated gif demo](http://i.imgur.com/EdClOFB.gif)](https://www.youtube.com/watch?v=zluBwbf3aew)
+[![animated gif demo](http://i.imgur.com/I0ztoPw.gif)](https://www.youtube.com/watch?v=zluBwbf3aew)
+
+[![animated gif demo](http://i.imgur.com/b5pJjtL.gif)](https://www.youtube.com/watch?v=zluBwbf3aew)
 
 Usage
 -----
