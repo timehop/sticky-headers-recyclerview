@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="animals">
+        <item>Abyssinian</item>
+        <item>Adelie Penguin</item>
+        <item>Affenpinscher</item>
+        <item>Afghan Hound</item>
+        <item>African Bush Elephant</item>
+        <item>African Civet</item>
+        <item>African Clawed Frog</item>
+        <item>African Forest Elephant</item>
+        <item>African Palm Civet</item>
+        <item>African Penguin</item>
+        <item>African Tree Toad</item>
+        <item>African Wild Dog</item>
+        <item>Ainu Dog</item>
+        <item>Airedale Terrier</item>
+        <item>Akbash</item>
+        <item>Akita</item>
+        <item>Alaskan Malamute</item>
+        <item>Albatross</item>
+        <item>Aldabra Giant Tortoise</item>
+        <item>Alligator</item>
+        <item>Alpine Dachsbracke</item>
+        <item>American Bulldog</item>
+        <item>American Cocker Spaniel</item>
+        <item>American Coonhound</item>
+        <item>American Eskimo Dog</item>
+        <item>American Foxhound</item>
+        <item>American Pit Bull Terrier</item>
+        <item>American Staffordshire Terrier</item>
+        <item>American Water Spaniel</item>
+        <item>Anatolian Shepherd Dog</item>
+        <item>Angelfish</item>
+        <item>Ant</item>
+        <item>Anteater</item>
+        <item>Antelope</item>
+        <item>Appenzeller Dog</item>
+        <item>Arctic Fox</item>
+        <item>Arctic Hare</item>
+        <item>Arctic Wolf</item>
+        <item>Armadillo</item>
+        <item>Asian Elephant</item>
+        <item>Asian Giant Hornet</item>
+        <item>Asian Palm Civet</item>
+        <item>Asiatic Black Bear</item>
+        <item>Australian Cattle Dog</item>
+        <item>Australian Kelpie Dog</item>
+        <item>Australian Mist</item>
+        <item>Australian Shepherd</item>
+        <item>Australian Terrier</item>
+        <item>Avocet</item>
+        <item>Axolotl</item>
+        <item>Aye Aye</item>
+        <item>Baboon</item>
+        <item>Bactrian Camel</item>
+        <item>Badger</item>
+        <item>Balinese</item>
+        <item>Banded Palm Civet</item>
+        <item>Bandicoot</item>
+        <item>Barb</item>
+        <item>Barn Owl</item>
+        <item>Barnacle</item>
+        <item>Barracuda</item>
+        <item>Basenji Dog</item>
+        <item>Basking Shark</item>
+        <item>Basset Hound</item>
+        <item>Bat</item>
+        <item>Bavarian Mountain Hound</item>
+        <item>Beagle</item>
+        <item>Bear</item>
+        <item>Bearded Collie</item>
+        <item>Bearded Dragon</item>
+        <item>Beaver</item>
+        <item>Bedlington Terrier</item>
+        <item>Beetle</item>
+        <item>Bengal Tiger</item>
+        <item>Bernese Mountain Dog</item>
+        <item>Bichon Frise</item>
+        <item>Binturong</item>
+        <item>Bird</item>
+        <item>Birds Of Paradise</item>
+        <item>Birman</item>
+        <item>Bison</item>
+        <item>Black Bear</item>
+        <item>Black Rhinoceros</item>
+        <item>Black Russian Terrier</item>
+        <item>Black Widow Spider</item>
+        <item>Bloodhound</item>
+        <item>Blue Lacy Dog</item>
+        <item>Blue Whale</item>
+        <item>Bluetick Coonhound</item>
+        <item>Bobcat</item>
+        <item>Bolognese Dog</item>
+        <item>Bombay</item>
+        <item>Bongo</item>
+        <item>Bonobo</item>
+        <item>Booby</item>
+        <item>Border Collie</item>
+        <item>Border Terrier</item>
+        <item>Bornean Orang-utan</item>
+        <item>Borneo Elephant</item>
+        <item>Boston Terrier</item>
+        <item>Bottle Nosed Dolphin</item>
+        <item>Boxer Dog</item>
+        <item>Boykin Spaniel</item>
+        <item>Brazilian Terrier</item>
+        <item>Brown Bear</item>
+        <item>Budgerigar</item>
+        <item>Buffalo</item>
+        <item>Bull Mastiff</item>
+        <item>Bull Shark</item>
+        <item>Bull Terrier</item>
+        <item>Bulldog</item>
+        <item>Bullfrog</item>
+        <item>Bumble Bee</item>
+        <item>Burmese</item>
+        <item>Burrowing Frog</item>
+        <item>Butterfly</item>
+        <item>Butterfly Fish</item>
+        <item>Caiman</item>
+        <item>Caiman Lizard</item>
+        <item>Cairn Terrier</item>
+        <item>Camel</item>
+        <item>Canaan Dog</item>
+        <item>Capybara</item>
+        <item>Caracal</item>
+        <item>Carolina Dog</item>
+        <item>Cassowary</item>
+        <item>Cat</item>
+        <item>Caterpillar</item>
+        <item>Catfish</item>
+        <item>Cavalier King Charles Spaniel</item>
+        <item>Centipede</item>
+        <item>Cesky Fousek</item>
+        <item>Chameleon</item>
+        <item>Chamois</item>
+        <item>Cheetah</item>
+        <item>Chesapeake Bay Retriever</item>
+        <item>Chicken</item>
+        <item>Chihuahua</item>
+        <item>Chimpanzee</item>
+        <item>Chinchilla</item>
+        <item>Chinese Crested Dog</item>
+        <item>Chinook</item>
+        <item>Chinstrap Penguin</item>
+        <item>Chipmunk</item>
+        <item>Chow Chow</item>
+        <item>Cichlid</item>
+        <item>Clouded Leopard</item>
+        <item>Clown Fish</item>
+        <item>Clumber Spaniel</item>
+        <item>Coati</item>
+        <item>Cockroach</item>
+        <item>Collared Peccary</item>
+        <item>Collie</item>
+        <item>Common Buzzard</item>
+        <item>Common Frog</item>
+        <item>Common Loon</item>
+        <item>Common Toad</item>
+        <item>Coral</item>
+        <item>Cottontop Tamarin</item>
+        <item>Cougar</item>
+        <item>Cow</item>
+        <item>Coyote</item>
+        <item>Crab</item>
+        <item>Crab-Eating Macaque</item>
+        <item>Crane</item>
+        <item>Crested Penguin</item>
+        <item>Crocodile</item>
+        <item>Cross River Gorilla</item>
+        <item>Curly Coated Retriever</item>
+        <item>Cuscus</item>
+        <item>Cuttlefish</item>
+        <item>Dachshund</item>
+        <item>Dalmatian</item>
+        <item>Darwin\'s Frog</item>
+        <item>Deer</item>
+        <item>Desert Tortoise</item>
+        <item>Deutsche Bracke</item>
+        <item>Dhole</item>
+        <item>Dingo</item>
+        <item>Discus</item>
+        <item>Doberman Pinscher</item>
+        <item>Dodo</item>
+        <item>Dog</item>
+        <item>Dogo Argentino</item>
+        <item>Dogue De Bordeaux</item>
+        <item>Dolphin</item>
+        <item>Donkey</item>
+        <item>Dormouse</item>
+        <item>Dragonfly</item>
+        <item>Drever</item>
+        <item>Duck</item>
+        <item>Dugong</item>
+        <item>Dunker</item>
+        <item>Dusky Dolphin</item>
+        <item>Dwarf Crocodile</item>
+        <item>Eagle</item>
+        <item>Earwig</item>
+        <item>Eastern Gorilla</item>
+        <item>Eastern Lowland Gorilla</item>
+        <item>Echidna</item>
+        <item>Edible Frog</item>
+        <item>Egyptian Mau</item>
+        <item>Electric Eel</item>
+        <item>Elephant</item>
+        <item>Elephant Seal</item>
+        <item>Elephant Shrew</item>
+        <item>Emperor Penguin</item>
+        <item>Emperor Tamarin</item>
+        <item>Emu</item>
+        <item>English Cocker Spaniel</item>
+        <item>English Shepherd</item>
+        <item>English Springer Spaniel</item>
+        <item>Entlebucher Mountain Dog</item>
+        <item>Epagneul Pont Audemer</item>
+        <item>Eskimo Dog</item>
+        <item>Estrela Mountain Dog</item>
+        <item>Falcon</item>
+        <item>Fennec Fox</item>
+        <item>Ferret</item>
+        <item>Field Spaniel</item>
+        <item>Fin Whale</item>
+        <item>Finnish Spitz</item>
+        <item>Fire-Bellied Toad</item>
+        <item>Fish</item>
+        <item>Fishing Cat</item>
+        <item>Flamingo</item>
+        <item>Flat Coat Retriever</item>
+        <item>Flounder</item>
+        <item>Fly</item>
+        <item>Flying Squirrel</item>
+        <item>Fossa</item>
+        <item>Fox</item>
+        <item>Fox Terrier</item>
+        <item>French Bulldog</item>
+        <item>Frigatebird</item>
+        <item>Frilled Lizard</item>
+        <item>Frog</item>
+        <item>Fur Seal</item>
+        <item>Galapagos Penguin</item>
+        <item>Galapagos Tortoise</item>
+        <item>Gar</item>
+        <item>Gecko</item>
+        <item>Gentoo Penguin</item>
+        <item>Geoffroys Tamarin</item>
+        <item>Gerbil</item>
+        <item>German Pinscher</item>
+        <item>German Shepherd</item>
+        <item>Gharial</item>
+        <item>Giant African Land Snail</item>
+        <item>Giant Clam</item>
+        <item>Giant Panda Bear</item>
+        <item>Giant Schnauzer</item>
+        <item>Gibbon</item>
+        <item>Gila Monster</item>
+        <item>Giraffe</item>
+        <item>Glass Lizard</item>
+        <item>Glow Worm</item>
+        <item>Goat</item>
+        <item>Golden Lion Tamarin</item>
+        <item>Golden Oriole</item>
+        <item>Golden Retriever</item>
+        <item>Goose</item>
+        <item>Gopher</item>
+        <item>Gorilla</item>
+        <item>Grasshopper</item>
+        <item>Great Dane</item>
+        <item>Great White Shark</item>
+        <item>Greater Swiss Mountain Dog</item>
+        <item>Green Bee-Eater</item>
+        <item>Greenland Dog</item>
+        <item>Grey Mouse Lemur</item>
+        <item>Grey Reef Shark</item>
+        <item>Grey Seal</item>
+        <item>Greyhound</item>
+        <item>Grizzly Bear</item>
+        <item>Grouse</item>
+        <item>Guinea Fowl</item>
+        <item>Guinea Pig</item>
+        <item>Guppy</item>
+        <item>Hammerhead Shark</item>
+        <item>Hamster</item>
+        <item>Hare</item>
+        <item>Harrier</item>
+        <item>Havanese</item>
+        <item>Hedgehog</item>
+        <item>Hercules Beetle</item>
+        <item>Hermit Crab</item>
+        <item>Heron</item>
+        <item>Highland Cattle</item>
+        <item>Himalayan</item>
+        <item>Hippopotamus</item>
+        <item>Honey Bee</item>
+        <item>Horn Shark</item>
+        <item>Horned Frog</item>
+        <item>Horse</item>
+        <item>Horseshoe Crab</item>
+        <item>Howler Monkey</item>
+        <item>Human</item>
+        <item>Humboldt Penguin</item>
+        <item>Hummingbird</item>
+        <item>Humpback Whale</item>
+        <item>Hyena</item>
+        <item>Ibis</item>
+        <item>Ibizan Hound</item>
+        <item>Iguana</item>
+        <item>Impala</item>
+        <item>Indian Elephant</item>
+        <item>Indian Palm Squirrel</item>
+        <item>Indian Rhinoceros</item>
+        <item>Indian Star Tortoise</item>
+        <item>Indochinese Tiger</item>
+        <item>Indri</item>
+        <item>Insect</item>
+        <item>Irish Setter</item>
+        <item>Irish WolfHound</item>
+        <item>Jack Russel</item>
+        <item>Jackal</item>
+        <item>Jaguar</item>
+        <item>Japanese Chin</item>
+        <item>Japanese Macaque</item>
+        <item>Javan Rhinoceros</item>
+        <item>Javanese</item>
+        <item>Jellyfish</item>
+        <item>Kakapo</item>
+        <item>Kangaroo</item>
+        <item>Keel Billed Toucan</item>
+        <item>Killer Whale</item>
+        <item>King Crab</item>
+        <item>King Penguin</item>
+        <item>Kingfisher</item>
+        <item>Kiwi</item>
+        <item>Koala</item>
+        <item>Komodo Dragon</item>
+        <item>Kudu</item>
+        <item>Labradoodle</item>
+        <item>Labrador Retriever</item>
+        <item>Ladybird</item>
+        <item>Leaf-Tailed Gecko</item>
+        <item>Lemming</item>
+        <item>Lemur</item>
+        <item>Leopard</item>
+        <item>Leopard Cat</item>
+        <item>Leopard Seal</item>
+        <item>Leopard Tortoise</item>
+        <item>Liger</item>
+        <item>Lion</item>
+        <item>Lionfish</item>
+        <item>Little Penguin</item>
+        <item>Lizard</item>
+        <item>Llama</item>
+        <item>Lobster</item>
+        <item>Long-Eared Owl</item>
+        <item>Lynx</item>
+        <item>Macaroni Penguin</item>
+        <item>Macaw</item>
+        <item>Magellanic Penguin</item>
+        <item>Magpie</item>
+        <item>Maine Coon</item>
+        <item>Malayan Civet</item>
+        <item>Malayan Tiger</item>
+        <item>Maltese</item>
+        <item>Manatee</item>
+        <item>Mandrill</item>
+        <item>Manta Ray</item>
+        <item>Marine Toad</item>
+        <item>Markhor</item>
+        <item>Marsh Frog</item>
+        <item>Masked Palm Civet</item>
+        <item>Mastiff</item>
+        <item>Mayfly</item>
+        <item>Meerkat</item>
+        <item>Millipede</item>
+        <item>Minke Whale</item>
+        <item>Mole</item>
+        <item>Molly</item>
+        <item>Mongoose</item>
+        <item>Mongrel</item>
+        <item>Monitor Lizard</item>
+        <item>Monkey</item>
+        <item>Monte Iberia Eleuth</item>
+        <item>Moorhen</item>
+        <item>Moose</item>
+        <item>Moray Eel</item>
+        <item>Moth</item>
+        <item>Mountain Gorilla</item>
+        <item>Mountain Lion</item>
+        <item>Mouse</item>
+        <item>Mule</item>
+        <item>Neanderthal</item>
+        <item>Neapolitan Mastiff</item>
+        <item>Newfoundland</item>
+        <item>Newt</item>
+        <item>Nightingale</item>
+        <item>Norfolk Terrier</item>
+        <item>Norwegian Forest</item>
+        <item>Numbat</item>
+        <item>Nurse Shark</item>
+        <item>Ocelot</item>
+        <item>Octopus</item>
+        <item>Okapi</item>
+        <item>Old English Sheepdog</item>
+        <item>Olm</item>
+        <item>Opossum</item>
+        <item>Orang-utan</item>
+        <item>Ostrich</item>
+        <item>Otter</item>
+        <item>Oyster</item>
+        <item>Pademelon</item>
+        <item>Panther</item>
+        <item>Parrot</item>
+        <item>Patas Monkey</item>
+        <item>Peacock</item>
+        <item>Pekingese</item>
+        <item>Pelican</item>
+        <item>Penguin</item>
+        <item>Persian</item>
+        <item>Pheasant</item>
+        <item>Pied Tamarin</item>
+        <item>Pig</item>
+        <item>Pika</item>
+        <item>Pike</item>
+        <item>Pink Fairy Armadillo</item>
+        <item>Piranha</item>
+        <item>Platypus</item>
+        <item>Pointer</item>
+        <item>Poison Dart Frog</item>
+        <item>Polar Bear</item>
+        <item>Pond Skater</item>
+        <item>Poodle</item>
+        <item>Pool Frog</item>
+        <item>Porcupine</item>
+        <item>Possum</item>
+        <item>Prawn</item>
+        <item>Proboscis Monkey</item>
+        <item>Puffer Fish</item>
+        <item>Puffin</item>
+        <item>Pug</item>
+        <item>Puma</item>
+        <item>Purple Emperor</item>
+        <item>Puss Moth</item>
+        <item>Pygmy Hippopotamus</item>
+        <item>Pygmy Marmoset</item>
+        <item>Quail</item>
+        <item>Quetzal</item>
+        <item>Quokka</item>
+        <item>Quoll</item>
+        <item>Rabbit</item>
+        <item>Raccoon</item>
+        <item>Raccoon Dog</item>
+        <item>Radiated Tortoise</item>
+        <item>Ragdoll</item>
+        <item>Rat</item>
+        <item>Rattlesnake</item>
+        <item>Red Knee Tarantula</item>
+        <item>Red Panda</item>
+        <item>Red Wolf</item>
+        <item>Red-handed Tamarin</item>
+        <item>Reindeer</item>
+        <item>Rhinoceros</item>
+        <item>River Dolphin</item>
+        <item>River Turtle</item>
+        <item>Robin</item>
+        <item>Rock Hyrax</item>
+        <item>Rockhopper Penguin</item>
+        <item>Roseate Spoonbill</item>
+        <item>Rottweiler</item>
+        <item>Royal Penguin</item>
+        <item>Russian Blue</item>
+        <item>Sabre-Toothed Tiger</item>
+        <item>Saint Bernard</item>
+        <item>Salamander</item>
+        <item>Sand Lizard</item>
+        <item>Saola</item>
+        <item>Scorpion</item>
+        <item>Scorpion Fish</item>
+        <item>Sea Dragon</item>
+        <item>Sea Lion</item>
+        <item>Sea Otter</item>
+        <item>Sea Slug</item>
+        <item>Sea Squirt</item>
+        <item>Sea Turtle</item>
+        <item>Sea Urchin</item>
+        <item>Seahorse</item>
+        <item>Seal</item>
+        <item>Serval</item>
+        <item>Sheep</item>
+        <item>Shih Tzu</item>
+        <item>Shrimp</item>
+        <item>Siamese</item>
+        <item>Siamese Fighting Fish</item>
+        <item>Siberian</item>
+        <item>Siberian Husky</item>
+        <item>Siberian Tiger</item>
+        <item>Silver Dollar</item>
+        <item>Skunk</item>
+        <item>Sloth</item>
+        <item>Slow Worm</item>
+        <item>Snail</item>
+        <item>Snake</item>
+        <item>Snapping Turtle</item>
+        <item>Snowshoe</item>
+        <item>Snowy Owl</item>
+        <item>Somali</item>
+        <item>South China Tiger</item>
+        <item>Spadefoot Toad</item>
+        <item>Sparrow</item>
+        <item>Spectacled Bear</item>
+        <item>Sperm Whale</item>
+        <item>Spider Monkey</item>
+        <item>Spiny Dogfish</item>
+        <item>Sponge</item>
+        <item>Squid</item>
+        <item>Squirrel</item>
+        <item>Squirrel Monkey</item>
+        <item>Sri Lankan Elephant</item>
+        <item>Staffordshire Bull Terrier</item>
+        <item>Stag Beetle</item>
+        <item>Starfish</item>
+        <item>Stellers Sea Cow</item>
+        <item>Stick Insect</item>
+        <item>Stingray</item>
+        <item>Stoat</item>
+        <item>Striped Rocket Frog</item>
+        <item>Sumatran Elephant</item>
+        <item>Sumatran Orang-utan</item>
+        <item>Sumatran Rhinoceros</item>
+        <item>Sumatran Tiger</item>
+        <item>Sun Bear</item>
+        <item>Swan</item>
+        <item>Tang</item>
+        <item>Tapir</item>
+        <item>Tarsier</item>
+        <item>Tasmanian Devil</item>
+        <item>Tawny Owl</item>
+        <item>Termite</item>
+        <item>Tetra</item>
+        <item>Thorny Devil</item>
+        <item>Tibetan Mastiff</item>
+        <item>Tiffany</item>
+        <item>Tiger</item>
+        <item>Tiger Salamander</item>
+        <item>Tiger Shark</item>
+        <item>Tortoise</item>
+        <item>Toucan</item>
+        <item>Tree Frog</item>
+        <item>Tropicbird</item>
+        <item>Tuatara</item>
+        <item>Turkey</item>
+        <item>Turkish Angora</item>
+        <item>Uakari</item>
+        <item>Uguisu</item>
+        <item>Umbrellabird</item>
+        <item>Vampire Bat</item>
+        <item>Vervet Monkey</item>
+        <item>Vulture</item>
+        <item>Wallaby</item>
+        <item>Walrus</item>
+        <item>Warthog</item>
+        <item>Wasp</item>
+        <item>Water Buffalo</item>
+        <item>Water Dragon</item>
+        <item>Water Vole</item>
+        <item>Weasel</item>
+        <item>Welsh Corgi</item>
+        <item>West Highland Terrier</item>
+        <item>Western Gorilla</item>
+        <item>Western Lowland Gorilla</item>
+        <item>Whale Shark</item>
+        <item>Whippet</item>
+        <item>White Faced Capuchin</item>
+        <item>White Rhinoceros</item>
+        <item>White Tiger</item>
+        <item>Wild Boar</item>
+        <item>Wildebeest</item>
+        <item>Wolf</item>
+        <item>Wolverine</item>
+        <item>Wombat</item>
+        <item>Woodlouse</item>
+        <item>Woodpecker</item>
+        <item>Woolly Mammoth</item>
+        <item>Woolly Monkey</item>
+        <item>Wrasse</item>
+        <item>X-Ray Tetra</item>
+        <item>Yak</item>
+        <item>Yellow-Eyed Penguin</item>
+        <item>Yorkshire Terrier</item>
+        <item>Zebra</item>
+        <item>Zebra Shark</item>
+        <item>Zebu</item>
+        <item>Zonkey</item>
+        <item>Zorse</item>
+    </string-array>
+</resources>
