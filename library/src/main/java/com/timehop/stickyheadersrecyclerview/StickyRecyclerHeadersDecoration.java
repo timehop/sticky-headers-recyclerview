@@ -45,7 +45,6 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
       if (nextPosition != -1 && hasNewHeader(nextPosition)) {
         View secondHeader = getHeader(parent, nextPosition);
         //Translate the topmost header so the next header takes its place, if applicable
-        //TODO: this doesn't work if the headers are larger than the views
         if (orientation == LinearLayoutManager.VERTICAL &&
             nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight() < 0) {
           canvas.translate(0, nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight());
