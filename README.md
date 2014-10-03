@@ -14,7 +14,8 @@ Here is a quick video of it in action (click to see the full video):
 Usage
 -----
 
-There are two main classes, `StickyRecyclerHeadersAdapter` and `StickyRecyclerHeadersDecoration`.
+There are three main classes, `StickyRecyclerHeadersAdapter`, `StickyRecyclerHeadersDecoration`,
+and `StickyRecyclerHeadersTouchListener`.
 
 `StickyRecyclerHeadersAdapter` has a very similar interface to the `RecyclerView.Adapter`, and it
 is recommended that you make your `RecyclerView.Adapter` implement `StickyRecyclerHeadersAdapter`.
@@ -54,6 +55,10 @@ touchListener.setOnHeaderClickListener(
     });
 mRecyclerView.addOnItemTouchListener(touchListener);
 ```
+
+Finally, `StickyRecyclerHeadersTouchListener` allows you to listen for clicks on header views.
+Simply create an instance of `StickyRecyclerHeadersTouchListener`, set the `OnHeaderClickListener`,
+and add the `StickyRecyclerHeadersTouchListener` as a touch listener to your `RecyclerView`.
 
 Compatibility
 -------------
