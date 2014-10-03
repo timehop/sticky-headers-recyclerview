@@ -43,6 +43,13 @@ mAdapter = new MyStickyRecyclerHeadersAdapter();
 mRecyclerView.setAdapter(mAdapter);
 mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 mRecyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(mAdapter));
+```
+
+Finally, `StickyRecyclerHeadersTouchListener` allows you to listen for clicks on header views.
+Simply create an instance of `StickyRecyclerHeadersTouchListener`, set the `OnHeaderClickListener`,
+and add the `StickyRecyclerHeadersTouchListener` as a touch listener to your `RecyclerView`.
+
+```java
 StickyRecyclerHeadersTouchListener touchListener =
     new StickyRecyclerHeadersTouchListener(recyclerView, headersDecor);
 touchListener.setOnHeaderClickListener(
@@ -55,10 +62,6 @@ touchListener.setOnHeaderClickListener(
     });
 mRecyclerView.addOnItemTouchListener(touchListener);
 ```
-
-Finally, `StickyRecyclerHeadersTouchListener` allows you to listen for clicks on header views.
-Simply create an instance of `StickyRecyclerHeadersTouchListener`, set the `OnHeaderClickListener`,
-and add the `StickyRecyclerHeadersTouchListener` as a touch listener to your `RecyclerView`.
 
 Compatibility
 -------------
