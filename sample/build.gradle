@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.timehop.stickyheadersrecyclerview.sample"
-        minSdkVersion 14
+        minSdkVersion 7
         targetSdkVersion 21
         versionCode 1
         versionName "0.1"
@@ -24,7 +24,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:recyclerview-v7:21.0.0-rc1"
     compile project(':library')
 }
