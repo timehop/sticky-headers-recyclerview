@@ -100,14 +100,13 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
   }
 
   private int getOrientation(RecyclerView parent) {
-    LinearLayoutManager layoutManager;
-    try {
-      layoutManager = (LinearLayoutManager) parent.getLayoutManager();
-    } catch (ClassCastException e) {
+    if (parent.getLayoutManager() instanceof LinearLayoutManager) {
+      LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
+      return layoutManager.getOrientation();
+    } else {
       throw new IllegalStateException("StickyListHeadersDecoration can only be used with a " +
-          "LinearLayoutManager.", e);
+          "LinearLayoutManager.");
     }
-    return layoutManager.getOrientation();
   }
 
   private View getHeader(RecyclerView parent, int position) {
@@ -146,12 +145,7 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
     return header;
   }
 
-  @SuppressWarnings("SimplifiableIfStatement")
   private boolean hasNewHeader(int position) {
-    if (position == 0) {
-      return true;
-    } else {
-      return mAdapter.getHeaderId(position) != mAdapter.getHeaderId(position - 1);
-    }
+    return position == 0 || mAdapter.getHeaderId(position) != mAdapter.getHeaderId(position - 1);
   }
 }
