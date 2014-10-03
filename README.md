@@ -14,7 +14,7 @@ Here is a quick video of it in action (click to see the full video):
 Usage
 -----
 
-There are two main classes, `StickyRecyclerHeadersAdapter` and `StickyRecyclerHeadersAdapter`.
+There are two main classes, `StickyRecyclerHeadersAdapter` and `StickyRecyclerHeadersDecoration`.
 
 `StickyRecyclerHeadersAdapter` has a very similar interface to the `RecyclerView.Adapter`, and it
 is recommended that you make your `RecyclerView.Adapter` implement `StickyRecyclerHeadersAdapter`.
@@ -43,6 +43,21 @@ mRecyclerView.setAdapter(mAdapter);
 mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 mRecyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(mAdapter));
 ```
+
+Compatibility
+-------------
+
+This should work everywhere that RecyclerView does (API 7+).  If you're using the pre-release
+version of RecyclerView, you may encounter this error:
+
+> Error:Execution failed for task ':sample:processDebugManifest'.
+
+> Manifest merger failed : uses-sdk:minSdkVersion 14 cannot be smaller than version L declared in
+library com.android.support:recyclerview-v7:21.0.0-rc1
+
+You can work around this by adding `<uses-sdk tools:node="replace" />`.  [See the sample app's
+manifest for an example.]
+(https://github.com/timehop/sticky-headers-recyclerview/blob/master/sample/src/main/AndroidManifest.xml#L3-L5)
 
 Known Issues
 ------------
