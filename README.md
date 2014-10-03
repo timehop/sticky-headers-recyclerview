@@ -62,7 +62,9 @@ manifest for an example.]
 Known Issues
 ------------
 
-The header views aren't recycled at this time.  Contributions are most welcome.
+* The header views aren't recycled at this time.  Contributions are most welcome.
+
+* I haven't tested this with ItemAnimators yet.
 
 Version History
 ---------------
