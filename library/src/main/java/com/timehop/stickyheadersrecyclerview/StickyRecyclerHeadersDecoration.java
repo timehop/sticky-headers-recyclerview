@@ -5,12 +5,14 @@ import android.graphics.Rect;
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
 class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
   private final StickyRecyclerHeadersAdapter mAdapter;
   private final LongSparseArray<View> mHeaderViews = new LongSparseArray<>();
+  private final SparseArray<Rect> mHeaderRects = new SparseArray<>();
 
   public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter) {
     mAdapter = adapter;
@@ -20,7 +22,7 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
   public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
     int orientation = getOrientation(parent);
     if (hasNewHeader(itemPosition)) {
-      View header = getHeader(parent, itemPosition);
+      View header = getHeaderView(parent, itemPosition);
       if (orientation == LinearLayoutManager.VERTICAL) {
         outRect.top = header.getHeight();
       } else {
@@ -33,43 +35,54 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
   public void onDrawOver(Canvas canvas, RecyclerView parent) {
     super.onDrawOver(canvas, parent);
     int orientation = getOrientation(parent);
+    mHeaderRects.clear();
 
     if (parent.getChildCount() > 0) {
       View firstView = parent.getChildAt(0);
       // draw the first visible child's header at the top of the view
       int firstPosition = parent.getChildPosition(firstView);
-      View firstHeader = getHeader(parent, firstPosition);
-      canvas.save();
+      View firstHeader = getHeaderView(parent, firstPosition);
       View nextView = getNextView(parent);
+      int translationX = 0;
+      int translationY = 0;
       int nextPosition = parent.getChildPosition(nextView);
       if (nextPosition != -1 && hasNewHeader(nextPosition)) {
-        View secondHeader = getHeader(parent, nextPosition);
+        View secondHeader = getHeaderView(parent, nextPosition);
         //Translate the topmost header so the next header takes its place, if applicable
         if (orientation == LinearLayoutManager.VERTICAL &&
             nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight() < 0) {
-          canvas.translate(0, nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight());
+          translationY = nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight();
         } else if (orientation == LinearLayoutManager.HORIZONTAL &&
             nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth() < 0) {
-          canvas.translate(nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth(), 0);
+          translationX = nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth();
         }
       }
+      canvas.save();
+      canvas.translate(translationX, translationY);
       firstHeader.draw(canvas);
       canvas.restore();
+      mHeaderRects.put(firstPosition, new Rect(translationX, translationY,
+          translationX + firstHeader.getWidth(), translationY + firstHeader.getHeight()));
 
       if (parent.getChildCount() > 1)
         for (int i = 1; i < parent.getChildCount(); i++) {
           int position = parent.getChildPosition(parent.getChildAt(i));
           if (hasNewHeader(position)) {
             // this header is different than the previous, it must be drawn in the correct place
-            View header = getHeader(parent, position);
-            canvas.save();
+            translationX = 0;
+            translationY = 0;
+            View header = getHeaderView(parent, position);
             if (orientation == LinearLayoutManager.VERTICAL) {
-              canvas.translate(0, parent.getChildAt(i).getTop() - header.getHeight());
+              translationY = parent.getChildAt(i).getTop() - header.getHeight();
             } else {
-              canvas.translate(parent.getChildAt(i).getLeft() - header.getWidth(), 0);
+              translationX = parent.getChildAt(i).getLeft() - header.getWidth();
             }
+            canvas.save();
+            canvas.translate(translationX, translationY);
             header.draw(canvas);
             canvas.restore();
+            mHeaderRects.put(position, new Rect(translationX, translationY,
+                translationX + header.getWidth(), translationY + header.getHeight()));
           }
         }
     }
@@ -84,7 +97,7 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
     View firstView = parent.getChildAt(0);
     // draw the first visible child's header at the top of the view
     int firstPosition = parent.getChildPosition(firstView);
-    View firstHeader = getHeader(parent, firstPosition);
+    View firstHeader = getHeaderView(parent, firstPosition);
     for (int i = 0; i < parent.getChildCount(); i++) {
       if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
         if (parent.getChildAt(i).getTop() > firstHeader.getHeight()) {
@@ -109,7 +122,30 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
     }
   }
 
-  private View getHeader(RecyclerView parent, int position) {
+  /**
+   * Gets the position of the header under the specified (x, y) coordinates.
+   * @param x x-coordinate
+   * @param y y-coordinate
+   * @return position of header, or -1 if not found
+   */
+  public int findHeaderPositionUnder(int x, int y) {
+    for (int i = 0; i < mHeaderRects.size(); i++) {
+      Rect rect = mHeaderRects.get(mHeaderRects.keyAt(i));
+      if (rect.contains(x, y)) {
+        return mHeaderRects.keyAt(i);
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Gets the header view for the associated position.  If it doesn't exist yet, it will be
+   * created, measured, and laid out.
+   * @param parent
+   * @param position
+   * @return Header view
+   */
+  public View getHeaderView(RecyclerView parent, int position) {
     long headerId = mAdapter.getHeaderId(position);
 
     View header = mHeaderViews.get(headerId);

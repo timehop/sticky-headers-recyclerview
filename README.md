@@ -42,6 +42,17 @@ mAdapter = new MyStickyRecyclerHeadersAdapter();
 mRecyclerView.setAdapter(mAdapter);
 mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 mRecyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(mAdapter));
+StickyRecyclerHeadersTouchListener touchListener =
+    new StickyRecyclerHeadersTouchListener(recyclerView, headersDecor);
+touchListener.setOnHeaderClickListener(
+    new StickyRecyclerHeadersTouchListener.OnHeaderClickListener() {
+      @Override
+      public void onHeaderClick(View header, int position, long headerId) {
+        Toast.makeText(MainActivity.this, "Header position: " + position + ", id: " + headerId,
+            Toast.LENGTH_SHORT).show();
+      }
+    });
+mRecyclerView.addOnItemTouchListener(touchListener);
 ```
 
 Compatibility
@@ -68,5 +79,7 @@ Known Issues
 
 Version History
 ---------------
+
+0.2 (10/3/2014) - Add StickyRecyclerHeadersTouchListener
 
 0.1 (10/2/2014) - Initial Release
