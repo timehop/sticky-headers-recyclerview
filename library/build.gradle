@@ -1,22 +1,21 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 'android-L'
-    buildToolsVersion "20.0.0"
+    compileSdkVersion rootProject.ext.compileSdkVersion as Integer
+    buildToolsVersion rootProject.ext.buildToolsVersion as String
+
     defaultConfig {
         applicationId "com.timehop.stickyheadersrecyclerview"
-        minSdkVersion 'L'
-        targetSdkVersion 'L'
-        versionCode 2
-        versionName "0.2"
+        minSdkVersion rootProject.ext.minSdkVersion as Integer
+        targetSdkVersion rootProject.ext.targetSdkVersion as Integer
+        versionCode rootProject.ext.versionCode as Integer
+        versionName rootProject.ext.versionName as String
     }
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    productFlavors {
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
