@@ -19,8 +19,10 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
   }
 
   @Override
-  public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
+  public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    super.getItemOffsets(outRect, view, parent, state);
     int orientation = getOrientation(parent);
+    int itemPosition = parent.getChildPosition(view);
     if (hasNewHeader(itemPosition)) {
       View header = getHeaderView(parent, itemPosition);
       if (orientation == LinearLayoutManager.VERTICAL) {
@@ -32,8 +34,8 @@ class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
   }
 
   @Override
-  public void onDrawOver(Canvas canvas, RecyclerView parent) {
-    super.onDrawOver(canvas, parent);
+  public void onDrawOver(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
+    super.onDrawOver(canvas, parent, state);
     int orientation = getOrientation(parent);
     mHeaderRects.clear();
 
