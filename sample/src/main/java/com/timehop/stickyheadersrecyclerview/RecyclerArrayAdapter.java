@@ -1,7 +1,6 @@
 package com.timehop.stickyheadersrecyclerview;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import java.util.Collection;
 public abstract class RecyclerArrayAdapter<M, VH extends RecyclerView.ViewHolder>
     extends RecyclerView.Adapter<VH> {
   private ArrayList<M> items = new ArrayList<M>();
-  private OnItemClickListener mOnItemClickListener;
 
   public RecyclerArrayAdapter() {
     setHasStableIds(true);
@@ -60,13 +58,5 @@ public abstract class RecyclerArrayAdapter<M, VH extends RecyclerView.ViewHolder
   @Override
   public int getItemCount() {
     return items.size();
-  }
-
-  public interface OnItemClickListener {
-    public void onItemClick(View view, int position);
-  }
-
-  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-    mOnItemClickListener = onItemClickListener;
   }
 }
