@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-    SampleArrayHeadersAdapter mAdapter = new SampleArrayHeadersAdapter();
+    final SampleArrayHeadersAdapter mAdapter = new SampleArrayHeadersAdapter();
     String[] animals = getResources().getStringArray(R.array.animals);
     mAdapter.addAll(animals);
     recyclerView.setAdapter(mAdapter);
@@ -48,6 +48,12 @@ public class MainActivity extends Activity {
           }
         });
     recyclerView.addOnItemTouchListener(touchListener);
+    recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+      @Override
+      public void onItemClick(View view, int position) {
+        mAdapter.remove(mAdapter.getItem(position));
+      }
+    }));
   }
 
   private class SampleArrayHeadersAdapter extends RecyclerArrayAdapter<String, RecyclerView.ViewHolder>
