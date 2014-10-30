@@ -184,6 +184,10 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   }
 
   private boolean hasNewHeader(int position) {
-    return position == 0 || mAdapter.getHeaderId(position) != mAdapter.getHeaderId(position - 1);
+    if (position >= 0 && position < mAdapter.getItemCount()) {
+      return position == 0 || mAdapter.getHeaderId(position) != mAdapter.getHeaderId(position - 1);
+    } else {
+      return false;
+    }
   }
 }
