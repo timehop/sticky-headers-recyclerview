@@ -1,4 +1,4 @@
-package com.timehop.stickyheadersrecyclerview;
+package com.timehop.stickyheadersrecyclerview.sample;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.timehop.stickyheadersrecyclerview.sample.R;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
 
 public class MainActivity extends Activity {

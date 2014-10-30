@@ -5,8 +5,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-class StickyRecyclerHeadersTouchListener implements
-    RecyclerView.OnItemTouchListener {
+public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTouchListener {
   private final GestureDetector mTapDetector;
   private final RecyclerView mRecyclerView;
   private final StickyRecyclerHeadersDecoration mDecor;

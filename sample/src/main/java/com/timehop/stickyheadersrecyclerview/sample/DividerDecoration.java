@@ -1,4 +1,4 @@
-package com.timehop.stickyheadersrecyclerview;
+package com.timehop.stickyheadersrecyclerview.sample;
 
 import android.content.Context;
 import android.content.res.TypedArray;

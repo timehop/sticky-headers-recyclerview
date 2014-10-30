@@ -9,7 +9,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
+public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
   private final StickyRecyclerHeadersAdapter mAdapter;
   private final LongSparseArray<View> mHeaderViews = new LongSparseArray<>();
   private final SparseArray<Rect> mHeaderRects = new SparseArray<>();
