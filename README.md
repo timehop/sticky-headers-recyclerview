@@ -13,6 +13,11 @@ Here is a quick video of it in action (click to see the full video):
 
 [![animated gif demo](http://i.imgur.com/b5pJjtL.gif)](https://www.youtube.com/watch?v=zluBwbf3aew)
 
+Download
+--------
+
+    compile 'com.timehop.stickyheadersrecyclerview:library:0.3.2'
+
 Usage
 -----
 
@@ -68,17 +73,7 @@ mRecyclerView.addOnItemTouchListener(touchListener);
 Compatibility
 -------------
 
-This should work everywhere that RecyclerView does (API 7+).  If you're using the pre-release
-version of RecyclerView, you may encounter this error:
-
-> Error:Execution failed for task ':sample:processDebugManifest'.
-
-> Manifest merger failed : uses-sdk:minSdkVersion 14 cannot be smaller than version L declared in
-library com.android.support:recyclerview-v7:21.0.0-rc1
-
-You can work around this by adding `<uses-sdk tools:node="replace" />`.  [See the sample app's
-manifest for an example.]
-(https://github.com/timehop/sticky-headers-recyclerview/blob/master/sample/src/main/AndroidManifest.xml#L3-L5)
+This should work everywhere that RecyclerView does (API 7+).
 
 Known Issues
 ------------
@@ -89,6 +84,8 @@ Known Issues
 
 Version History
 ---------------
+
+0.3.2 (11/1/2014) - Bug fixes for list items with margins & deleting items
 
 0.2 (10/3/2014) - Add StickyRecyclerHeadersTouchListener
 
