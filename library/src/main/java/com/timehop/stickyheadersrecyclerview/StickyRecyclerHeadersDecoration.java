@@ -101,13 +101,15 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     int firstPosition = parent.getChildPosition(firstView);
     View firstHeader = getHeaderView(parent, firstPosition);
     for (int i = 0; i < parent.getChildCount(); i++) {
+      View child = parent.getChildAt(i);
+      RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
       if (getOrientation(parent) == LinearLayoutManager.VERTICAL) {
-        if (parent.getChildAt(i).getTop() > firstHeader.getHeight()) {
-          return parent.getChildAt(i);
+        if (child.getTop() - layoutParams.topMargin > firstHeader.getHeight()) {
+          return child;
         }
       } else {
-        if (parent.getChildAt(i).getLeft() > firstHeader.getWidth()) {
-          return parent.getChildAt(i);
+        if (child.getLeft() - layoutParams.leftMargin > firstHeader.getWidth()) {
+          return child;
         }
       }
     }
