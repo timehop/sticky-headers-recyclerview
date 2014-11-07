@@ -45,18 +45,18 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       int firstPosition = parent.getChildPosition(firstView);
       View firstHeader = getHeaderView(parent, firstPosition);
       View nextView = getNextView(parent);
-      int translationX = 0;
-      int translationY = 0;
+      int translationX = Math.max(parent.getChildAt(0).getLeft() - firstHeader.getWidth(), 0);
+      int translationY = Math.max(parent.getChildAt(0).getTop() - firstHeader.getHeight(), 0);
       int nextPosition = parent.getChildPosition(nextView);
-      if (nextPosition != -1 && hasNewHeader(nextPosition)) {
+      if (nextPosition > 0 && hasNewHeader(nextPosition)) {
         View secondHeader = getHeaderView(parent, nextPosition);
         //Translate the topmost header so the next header takes its place, if applicable
         if (orientation == LinearLayoutManager.VERTICAL &&
             nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight() < 0) {
-          translationY = nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight();
+          translationY += nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight();
         } else if (orientation == LinearLayoutManager.HORIZONTAL &&
             nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth() < 0) {
-          translationX = nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth();
+          translationX += nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth();
         }
       }
       canvas.save();
