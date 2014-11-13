@@ -40,53 +40,53 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     mHeaderRects.clear();
 
     if (parent.getChildCount() > 0 && mAdapter.getItemCount() > 0) {
-      View firstView = parent.getChildAt(0);
       // draw the first visible child's header at the top of the view
+      View firstView = parent.getChildAt(0);
       int firstPosition = parent.getChildPosition(firstView);
-      View firstHeader = getHeaderView(parent, firstPosition);
-      View nextView = getNextView(parent);
-      int translationX = Math.max(parent.getChildAt(0).getLeft() - firstHeader.getWidth(), 0);
-      int translationY = Math.max(parent.getChildAt(0).getTop() - firstHeader.getHeight(), 0);
-      int nextPosition = parent.getChildPosition(nextView);
-      if (nextPosition > 0 && hasNewHeader(nextPosition)) {
-        View secondHeader = getHeaderView(parent, nextPosition);
-        //Translate the topmost header so the next header takes its place, if applicable
-        if (orientation == LinearLayoutManager.VERTICAL &&
-            nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight() < 0) {
-          translationY += nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight();
-        } else if (orientation == LinearLayoutManager.HORIZONTAL &&
-            nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth() < 0) {
-          translationX += nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth();
-        }
-      }
-      canvas.save();
-      canvas.translate(translationX, translationY);
-      firstHeader.draw(canvas);
-      canvas.restore();
-      mHeaderRects.put(firstPosition, new Rect(translationX, translationY,
-          translationX + firstHeader.getWidth(), translationY + firstHeader.getHeight()));
-
-      if (parent.getChildCount() > 1)
-        for (int i = 1; i < parent.getChildCount(); i++) {
-          int position = parent.getChildPosition(parent.getChildAt(i));
-          if (hasNewHeader(position)) {
-            // this header is different than the previous, it must be drawn in the correct place
-            translationX = 0;
-            translationY = 0;
-            View header = getHeaderView(parent, position);
-            if (orientation == LinearLayoutManager.VERTICAL) {
-              translationY = parent.getChildAt(i).getTop() - header.getHeight();
-            } else {
-              translationX = parent.getChildAt(i).getLeft() - header.getWidth();
-            }
-            canvas.save();
-            canvas.translate(translationX, translationY);
-            header.draw(canvas);
-            canvas.restore();
-            mHeaderRects.put(position, new Rect(translationX, translationY,
-                translationX + header.getWidth(), translationY + header.getHeight()));
+      if (mAdapter.getHeaderId(firstPosition) > 0) {
+        View firstHeader = getHeaderView(parent, firstPosition);
+        View nextView = getNextView(parent);
+        int translationX = Math.max(parent.getChildAt(0).getLeft() - firstHeader.getWidth(), 0);
+        int translationY = Math.max(parent.getChildAt(0).getTop() - firstHeader.getHeight(), 0);
+        int nextPosition = parent.getChildPosition(nextView);
+        if (nextPosition > 0 && hasNewHeader(nextPosition)) {
+          View secondHeader = getHeaderView(parent, nextPosition);
+          //Translate the topmost header so the next header takes its place, if applicable
+          if (orientation == LinearLayoutManager.VERTICAL &&
+              nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight() < 0) {
+            translationY += nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight();
+          } else if (orientation == LinearLayoutManager.HORIZONTAL &&
+              nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth() < 0) {
+            translationX += nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth();
           }
         }
+        canvas.save();
+        canvas.translate(translationX, translationY);
+        firstHeader.draw(canvas);
+        canvas.restore();
+        mHeaderRects.put(firstPosition, new Rect(translationX, translationY,
+            translationX + firstHeader.getWidth(), translationY + firstHeader.getHeight()));
+      }
+      for (int i = 1; i < parent.getChildCount(); i++) {
+        int position = parent.getChildPosition(parent.getChildAt(i));
+        if (hasNewHeader(position)) {
+          // this header is different than the previous, it must be drawn in the correct place
+          int translationX = 0;
+          int translationY = 0;
+          View header = getHeaderView(parent, position);
+          if (orientation == LinearLayoutManager.VERTICAL) {
+            translationY = parent.getChildAt(i).getTop() - header.getHeight();
+          } else {
+            translationX = parent.getChildAt(i).getLeft() - header.getWidth();
+          }
+          canvas.save();
+          canvas.translate(translationX, translationY);
+          header.draw(canvas);
+          canvas.restore();
+          mHeaderRects.put(position, new Rect(translationX, translationY,
+              translationX + header.getWidth(), translationY + header.getHeight()));
+        }
+      }
     }
   }
 
@@ -186,10 +186,23 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   }
 
   private boolean hasNewHeader(int position) {
-    if (position >= 0 && position < mAdapter.getItemCount()) {
-      return position == 0 || mAdapter.getHeaderId(position) != mAdapter.getHeaderId(position - 1);
+    if (getFirstHeaderPosition() == position) {
+      return true;
+    } else if (mAdapter.getHeaderId(position) < 0) {
+      return false;
+    } else if (position > 0 && position < mAdapter.getItemCount()) {
+      return mAdapter.getHeaderId(position) != mAdapter.getHeaderId(position - 1);
     } else {
       return false;
     }
+  }
+
+  private int getFirstHeaderPosition() {
+    for (int i = 0; i < mAdapter.getItemCount(); i++) {
+      if (mAdapter.getHeaderId(i) >= 0) {
+        return i;
+      }
+    }
+    return -1;
   }
 }
