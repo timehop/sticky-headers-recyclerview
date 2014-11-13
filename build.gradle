@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.0'
+        classpath 'com.android.tools.build:gradle:0.14.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -20,9 +20,9 @@ allprojects {
 
 ext {
     compileSdkVersion = 21
-    buildToolsVersion = '21.0.1'
+    buildToolsVersion = '21.1.1'
     targetSdkVersion = 21
     minSdkVersion = 14
-    versionCode = 5
-    versionName = "0.3.2"
+    versionCode = 6
+    versionName = "0.3.3"
 }
