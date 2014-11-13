@@ -7,6 +7,7 @@ public interface StickyRecyclerHeadersAdapter<VH extends RecyclerView.ViewHolder
   /**
    * Get the ID of the header associated with this item.  For example, if your headers group
    * items by their first letter, you could return the character representation of the first letter.
+   * Return a value < 0 if the view should not have a header (like, a header view or footer view)
    * @param position
    * @return
    */

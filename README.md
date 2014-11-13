@@ -16,7 +16,7 @@ Here is a quick video of it in action (click to see the full video):
 Download
 --------
 
-    compile 'com.timehop.stickyheadersrecyclerview:library:0.3.2'
+    compile 'com.timehop.stickyheadersrecyclerview:library:0.3.3@aar'
 
 Usage
 -----
@@ -84,8 +84,9 @@ Known Issues
 
 Version History
 ---------------
+0.3.3 (11/13/2014) - Fixes for padding, support views without headers
 
-0.3.2 (11/1/2014) - Bug fixes for list items with margins & deleting items
+0.3.2 (11/1/2014) - Bug fixes for list items with margins and deleting items
 
 0.2 (10/3/2014) - Add StickyRecyclerHeadersTouchListener
 
