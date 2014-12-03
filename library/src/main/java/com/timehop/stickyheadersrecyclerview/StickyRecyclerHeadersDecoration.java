@@ -43,7 +43,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       // draw the first visible child's header at the top of the view
       View firstView = parent.getChildAt(0);
       int firstPosition = parent.getChildPosition(firstView);
-      if (mAdapter.getHeaderId(firstPosition) > 0) {
+      if (mAdapter.getHeaderId(firstPosition) >= 0) {
         View firstHeader = getHeaderView(parent, firstPosition);
         View nextView = getNextView(parent);
         int translationX = Math.max(parent.getChildAt(0).getLeft() - firstHeader.getWidth(), 0);
