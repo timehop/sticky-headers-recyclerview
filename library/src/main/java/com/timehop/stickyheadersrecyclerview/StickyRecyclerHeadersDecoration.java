@@ -205,4 +205,12 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     }
     return -1;
   }
+
+  /**
+   * Invalidates cached headers.  This does not invalidate the recyclerview, you should do that manually after
+   * calling this method.
+   */
+  public void invalidateHeaders() {
+    mHeaderViews.clear();
+  }
 }
