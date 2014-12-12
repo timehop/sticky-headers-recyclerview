@@ -5,7 +5,6 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion as String
 
     defaultConfig {
-        applicationId "com.timehop.stickyheadersrecyclerview"
         minSdkVersion rootProject.ext.minSdkVersion as Integer
         targetSdkVersion rootProject.ext.targetSdkVersion as Integer
         versionCode rootProject.ext.versionCode as Integer
