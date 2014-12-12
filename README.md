@@ -84,6 +84,8 @@ Known Issues
 
 Version History
 ---------------
+0.3.5 (12/12/2014) - Add StickyRecyclerHeadersDecoration.invalidateHeaders() method
+
 0.3.4 (12/3/2014) - Fix issues with rendering of header views with header ID = 0
 
 0.3.3 (11/13/2014) - Fixes for padding, support views without headers
