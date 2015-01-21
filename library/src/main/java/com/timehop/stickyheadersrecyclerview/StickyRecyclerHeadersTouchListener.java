@@ -43,11 +43,13 @@ public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTo
   }
 
   @Override
-  public void onTouchEvent(RecyclerView view, MotionEvent e) { /* do nothing? */ }
+  public void onTouchEvent(RecyclerView view, MotionEvent e) {
+  /* do nothing? */
+  }
 
   private class SingleTapDetector extends GestureDetector.SimpleOnGestureListener {
     @Override
-    public boolean onSingleTapConfirmed(MotionEvent e) {
+    public boolean onSingleTapUp(MotionEvent e) {
       int position = mDecor.findHeaderPositionUnder((int) e.getX(), (int) e.getY());
       if (position != -1) {
         View headerView = mDecor.getHeaderView(mRecyclerView, position);
