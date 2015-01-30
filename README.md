@@ -16,7 +16,7 @@ Here is a quick video of it in action (click to see the full video):
 Download
 --------
 
-    compile 'com.timehop.stickyheadersrecyclerview:library:0.3.5@aar'
+    compile 'com.timehop.stickyheadersrecyclerview:library:0.3.6@aar'
 
 Usage
 -----
