@@ -17,7 +17,7 @@ public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTo
   }
 
   public StickyRecyclerHeadersTouchListener(final RecyclerView recyclerView,
-                                            final StickyRecyclerHeadersDecoration decor) {
+      final StickyRecyclerHeadersDecoration decor) {
     mTapDetector = new GestureDetector(recyclerView.getContext(), new SingleTapDetector());
     mRecyclerView = recyclerView;
     mDecor = decor;
@@ -28,8 +28,8 @@ public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTo
       return (StickyRecyclerHeadersAdapter) mRecyclerView.getAdapter();
     } else {
       throw new IllegalStateException("A RecyclerView with " +
-        StickyRecyclerHeadersTouchListener.class.getSimpleName() +
-        " requires a " + StickyRecyclerHeadersAdapter.class.getSimpleName());
+          StickyRecyclerHeadersTouchListener.class.getSimpleName() +
+          " requires a " + StickyRecyclerHeadersAdapter.class.getSimpleName());
     }
   }
 
