@@ -84,6 +84,8 @@ Known Issues
 
 Version History
 ---------------
+0.3.6 (1/30/2015) - Prevent header clicks from passing on the touch event
+
 0.3.5 (12/12/2014) - Add StickyRecyclerHeadersDecoration.invalidateHeaders() method
 
 0.3.4 (12/3/2014) - Fix issues with rendering of header views with header ID = 0
