@@ -15,28 +15,33 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
-
 public class MainActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+
+    // Set adapter populated with example dummy data
     final SampleArrayHeadersAdapter mAdapter = new SampleArrayHeadersAdapter();
-    String[] animals = getResources().getStringArray(R.array.animals);
-    mAdapter.addAll(animals);
+    mAdapter.addAll(getDummyDataSet());
     recyclerView.setAdapter(mAdapter);
-    int orientation;
-    if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-      orientation = LinearLayoutManager.VERTICAL;
-    } else {
-      orientation = LinearLayoutManager.HORIZONTAL;
-    }
-    recyclerView.setLayoutManager(new LinearLayoutManager(this, orientation, false));
+
+    // Set layout manager
+    int orientation = getLayoutManagerOrientation(getResources().getConfiguration().orientation);
+    final LinearLayoutManager layoutManager = new LinearLayoutManager(this, orientation, false);
+    recyclerView.setLayoutManager(layoutManager);
+
+    // Add the sticky headers decoration
     StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
-    recyclerView.addItemDecoration(new DividerDecoration(this));
     recyclerView.addItemDecoration(headersDecor);
+
+    // Add decoration for dividers between list items
+    recyclerView.addItemDecoration(new DividerDecoration(this));
+
+    // Add touch listeners
     StickyRecyclerHeadersTouchListener touchListener =
         new StickyRecyclerHeadersTouchListener(recyclerView, headersDecor);
     touchListener.setOnHeaderClickListener(
@@ -54,6 +59,18 @@ public class MainActivity extends Activity {
         mAdapter.remove(mAdapter.getItem(position));
       }
     }));
+  }
+
+  private String[] getDummyDataSet() {
+    return getResources().getStringArray(R.array.animals);
+  }
+
+  private int getLayoutManagerOrientation(int activityOrientation) {
+    if (activityOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+        return LinearLayoutManager.VERTICAL;
+    } else {
+        return LinearLayoutManager.HORIZONTAL;
+    }
   }
 
   private class SampleArrayHeadersAdapter extends RecyclerArrayAdapter<String, RecyclerView.ViewHolder>
