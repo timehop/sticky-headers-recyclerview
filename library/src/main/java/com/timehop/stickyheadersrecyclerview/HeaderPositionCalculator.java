@@ -57,12 +57,12 @@ public class HeaderPositionCalculator {
     return -1;
   }
 
-  public Rect getStickyHeaderBounds(RecyclerView recyclerView, View header, View firstView) {
+  public Rect getStickyHeaderBounds(RecyclerView recyclerView, View header, View firstView, boolean firstHeader) {
 
-    Rect bounds =
-        getTopHeaderOffset(header, firstView, mOrientationProvider.getOrientation(recyclerView));
+    int orientation = mOrientationProvider.getOrientation(recyclerView);
+    Rect bounds = getDefaultHeaderOffset(header, firstView, orientation);
 
-    if (!isStickyHeaderFullyVisible(recyclerView, header)) {
+    if (firstHeader && !isStickyHeaderFullyVisible(recyclerView, header)) {
       View viewAfterHeader = getFirstViewUnobscuredByHeader(recyclerView, header);
       int firstViewUnderHeaderPosition = recyclerView.getChildPosition(viewAfterHeader);
       View secondHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
@@ -73,10 +73,7 @@ public class HeaderPositionCalculator {
     return bounds;
   }
 
-  private Rect getTopHeaderOffset(View header, View firstView, int orientation) {
-    // Math.max is used here because if the left or top of a child is offscreen, we don't want the
-    // sticky header to be drawn offscreen. The left and top are important for taking into account
-    // layout parameters of the recyclerView (i.e. padding)
+  private Rect getDefaultHeaderOffset(View header, View firstView, int orientation) {
     int translationX, translationY;
     if (orientation == LinearLayoutManager.VERTICAL) {
       translationX = firstView.getLeft();

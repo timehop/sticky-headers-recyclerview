@@ -53,8 +53,9 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
 
   /**
    * Sets the offsets for the first item in a section to make room for the header view
+   *
    * @param itemOffsets rectangle to define offsets for the item
-   * @param header view used to calculate offset for the item
+   * @param header      view used to calculate offset for the item
    * @param orientation used to calculate offset for the item
    */
   private void setItemOffsetsForHeader(Rect itemOffsets, View header, int orientation) {
@@ -68,48 +69,36 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   @Override
   public void onDrawOver(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
     super.onDrawOver(canvas, parent, state);
-    int orientation = mOrientationProvider.getOrientation(parent);
     mHeaderRects.clear();
 
     if (parent.getChildCount() <= 0 || mAdapter.getItemCount() <= 0) {
       return;
     }
 
-    View firstView = parent.getChildAt(0);
-    int firstPosition = parent.getChildPosition(firstView);
-    // If first position should have a header
-    if (mAdapter.getHeaderId(firstPosition) >= 0) {
-      View header = mHeaderProvider.getHeader(parent, firstPosition);
-      Rect stickyHeaderOffsets =
-          mHeaderPositionCalculator.getStickyHeaderBounds(parent, header, firstView);
-      mRenderer.drawStickyHeader(canvas, header, stickyHeaderOffsets);
-      mHeaderRects.put(firstPosition, stickyHeaderOffsets);
-    }
-
-    for (int i = 1; i < parent.getChildCount(); i++) {
-      int position = parent.getChildPosition(parent.getChildAt(i));
-      if (mHeaderPositionCalculator.hasNewHeader(position)) {
-        // this header is different than the previous, it must be drawn in the correct place
-        int translationX = 0;
-        int translationY = 0;
-        View header = getHeaderView(parent, position);
-        if (orientation == LinearLayoutManager.VERTICAL) {
-          translationY = parent.getChildAt(i).getTop() - header.getHeight();
-        } else {
-          translationX = parent.getChildAt(i).getLeft() - header.getWidth();
-        }
-        canvas.save();
-        canvas.translate(translationX, translationY);
-        header.draw(canvas);
-        canvas.restore();
-        mHeaderRects.put(position, new Rect(translationX, translationY,
-            translationX + header.getWidth(), translationY + header.getHeight()));
+    for (int i = 0; i < parent.getChildCount(); i++) {
+      View itemView = parent.getChildAt(i);
+      int position = parent.getChildPosition(itemView);
+      if (hasStickyHeader(i, position) || mHeaderPositionCalculator.hasNewHeader(position)) {
+        View header = mHeaderProvider.getHeader(parent, position);
+        Rect headerOffset = mHeaderPositionCalculator.getStickyHeaderBounds(parent, header,
+            itemView, hasStickyHeader(i, position));
+        mRenderer.drawStickyHeader(canvas, header, headerOffset);
+        mHeaderRects.put(position, headerOffset);
       }
     }
   }
 
+  private boolean hasStickyHeader(int listChildPosition, int indexInList) {
+    if (listChildPosition > 0 || mAdapter.getHeaderId(indexInList) <= 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   /**
    * Gets the position of the header under the specified (x, y) coordinates.
+   *
    * @param x x-coordinate
    * @param y y-coordinate
    * @return position of header, or -1 if not found
@@ -127,6 +116,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   /**
    * Gets the header view for the associated position.  If it doesn't exist yet, it will be
    * created, measured, and laid out.
+   *
    * @param parent
    * @param position
    * @return Header view
