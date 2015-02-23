@@ -10,4 +10,5 @@
     android:textSize="14sp"
     android:gravity="center_vertical"
     tools:text="Aardvark"
+    android:background="@android:color/white"
     tools:context=".MainActivity"/>

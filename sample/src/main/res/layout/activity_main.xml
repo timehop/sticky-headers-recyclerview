@@ -5,11 +5,12 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/recyclerview"  
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@android:dimen/app_icon_size"
-        android:paddingRight="@android:dimen/app_icon_size"
+        android:layout_margin="24dp"
+        android:padding="8dp"
+        android:background="#ffbef0ff"
         android:saveEnabled="false"/>
 
 </RelativeLayout>

@@ -80,9 +80,9 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       int position = parent.getChildPosition(itemView);
       if (hasStickyHeader(i, position) || mHeaderPositionCalculator.hasNewHeader(position)) {
         View header = mHeaderProvider.getHeader(parent, position);
-        Rect headerOffset = mHeaderPositionCalculator.getStickyHeaderBounds(parent, header,
+        Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header,
             itemView, hasStickyHeader(i, position));
-        mRenderer.drawStickyHeader(canvas, header, headerOffset);
+        mRenderer.drawHeader(parent, canvas, header, headerOffset);
         mHeaderRects.put(position, headerOffset);
       }
     }

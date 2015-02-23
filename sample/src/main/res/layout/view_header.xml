@@ -6,9 +6,10 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/small"
+    android:padding="16dp"
     android:background="#001F3F"
-    android:textSize="24sp"
+    android:textSize="32sp"
+    android:textStyle="bold"
     android:textColor="@android:color/white"
     tools:text="Animals starting with A"
     tools:context=".MainActivity"/>
