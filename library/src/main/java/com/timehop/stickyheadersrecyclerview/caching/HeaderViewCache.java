@@ -10,7 +10,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
 
 /**
- * {@link Please describe HeaderViewCache!}
+ * An implementation of {@link HeaderProvider} that creates and caches header views
  */
 public class HeaderViewCache implements HeaderProvider {
 
