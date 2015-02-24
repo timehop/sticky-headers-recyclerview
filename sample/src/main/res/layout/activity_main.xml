@@ -12,6 +12,7 @@
         android:padding="8dp"
         android:background="#ffbef0ff"
         android:saveEnabled="false"
+        android:clipToPadding="true"
         />
 
 </RelativeLayout>
