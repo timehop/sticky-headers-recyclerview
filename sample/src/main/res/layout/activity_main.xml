@@ -11,6 +11,7 @@
         android:layout_margin="24dp"
         android:padding="8dp"
         android:background="#ffbef0ff"
-        android:saveEnabled="false"/>
+        android:saveEnabled="false"
+        />
 
 </RelativeLayout>

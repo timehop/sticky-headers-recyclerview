@@ -24,12 +24,14 @@ public class HeaderRenderer {
 
     ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
     // Clip drawing of headers to the padding of the RecyclerView. Avoids drawing in the padding
-    Rect clipRect = new Rect(
-        recyclerView.getLeft() - layoutParams.leftMargin + recyclerView.getPaddingLeft(),
-        recyclerView.getTop() - layoutParams.topMargin + recyclerView.getPaddingTop(),
-        recyclerView.getRight() - layoutParams.rightMargin - recyclerView.getPaddingRight(),
-        recyclerView.getBottom() - layoutParams.bottomMargin - recyclerView.getPaddingBottom());
-    canvas.clipRect(clipRect);
+    if (recyclerView.getLayoutManager().getClipToPadding()) {
+      Rect clipRect = new Rect(
+          recyclerView.getLeft() - layoutParams.leftMargin + recyclerView.getPaddingLeft(),
+          recyclerView.getTop() - layoutParams.topMargin + recyclerView.getPaddingTop(),
+          recyclerView.getRight() - layoutParams.rightMargin - recyclerView.getPaddingRight(),
+          recyclerView.getBottom() - layoutParams.bottomMargin - recyclerView.getPaddingBottom());
+      canvas.clipRect(clipRect);
+    }
 
     canvas.translate(offset.left, offset.top);
 

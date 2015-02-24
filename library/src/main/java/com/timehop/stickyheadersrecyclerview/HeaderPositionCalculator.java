@@ -167,12 +167,24 @@ public class HeaderPositionCalculator {
 
   private int getListTop(RecyclerView view) {
     MarginLayoutParams layoutParams = (MarginLayoutParams) view.getLayoutParams();
-    return view.getTop() - layoutParams.topMargin + view.getPaddingTop();
+    int top = view.getTop() - layoutParams.topMargin;
+
+    if (view.getLayoutManager().getClipToPadding()) {
+      top += view.getPaddingTop();
+    }
+
+    return top;
   }
 
   private int getListLeft(RecyclerView view) {
     MarginLayoutParams layoutParams = (MarginLayoutParams) view.getLayoutParams();
-    return view.getLeft() - layoutParams.leftMargin + view.getPaddingLeft();
+    int left = view.getLeft() - layoutParams.leftMargin;
+
+    if (view.getLayoutManager().getClipToPadding()) {
+      left += view.getPaddingLeft();
+    }
+
+    return left;
   }
 
 }
