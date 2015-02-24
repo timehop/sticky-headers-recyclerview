@@ -77,12 +77,17 @@ public class HeaderPositionCalculator {
 
   private Rect getDefaultHeaderOffset(RecyclerView recyclerView, View header, View firstView, int orientation) {
     int translationX, translationY;
+    MarginLayoutParams headerLayout = (MarginLayoutParams) header.getLayoutParams();
     if (orientation == LinearLayoutManager.VERTICAL) {
-      translationX = firstView.getLeft();
-      translationY = Math.max(firstView.getTop() - header.getHeight(), getListTop(recyclerView));
+      translationX = firstView.getLeft() + headerLayout.leftMargin;
+      translationY = Math.max(
+          firstView.getTop() - header.getHeight() - headerLayout.bottomMargin,
+          getListTop(recyclerView) + headerLayout.topMargin);
     } else {
-      translationY = firstView.getTop();
-      translationX = Math.max(firstView.getLeft() - header.getWidth(), getListLeft(recyclerView));
+      translationY = firstView.getTop() + headerLayout.topMargin;
+      translationX = Math.max(
+          firstView.getLeft() - header.getWidth() - headerLayout.rightMargin,
+          getListLeft(recyclerView) + headerLayout.leftMargin);
     }
 
     return new Rect(translationX, translationY, translationX + header.getWidth(),
@@ -95,12 +100,20 @@ public class HeaderPositionCalculator {
 
     if (firstViewUnderHeaderPosition > 0 && hasNewHeader(firstViewUnderHeaderPosition)) {
       View nextHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
+      MarginLayoutParams nextHeaderLayout = (MarginLayoutParams) nextHeader.getLayoutParams();
+      MarginLayoutParams headerLayout = (MarginLayoutParams) stickyHeader.getLayoutParams();
+
       if (mOrientationProvider.getOrientation(recyclerView) == LinearLayoutManager.VERTICAL) {
-        if (viewAfterHeader.getTop() - nextHeader.getHeight() < getListTop(recyclerView) + stickyHeader.getHeight()) {
+        int topOfNextHeader = viewAfterHeader.getTop() - nextHeaderLayout.bottomMargin - nextHeader.getHeight() - nextHeaderLayout.topMargin;
+        int bottomOfThisHeader = recyclerView.getPaddingTop() + stickyHeader.getBottom() + headerLayout.topMargin + headerLayout.bottomMargin;
+        if (topOfNextHeader < bottomOfThisHeader) {
+          /*getListTop(recyclerView) + headerLayout.topMargin + stickyHeader.getHeight()*/
           return true;
         }
       } else {
-        if (viewAfterHeader.getLeft() - nextHeader.getWidth() < getListLeft(recyclerView) + stickyHeader.getWidth()) {
+        int leftOfNextHeader = viewAfterHeader.getLeft() - nextHeaderLayout.rightMargin - nextHeader.getWidth() - nextHeaderLayout.leftMargin;
+        int rightOfThisHeader = recyclerView.getPaddingLeft() + stickyHeader.getRight() + headerLayout.leftMargin + headerLayout.rightMargin;
+        if (leftOfNextHeader < rightOfThisHeader) {
           return true;
         }
       }
@@ -110,17 +123,18 @@ public class HeaderPositionCalculator {
   }
 
   private void translateHeaderWithNextHeader(RecyclerView recyclerView, int orientation, Rect translation, View currentHeader, View viewAfterNextHeader, View nextHeader) {
-    //Translate the topmost header so the next header takes its place, if applicable
+    MarginLayoutParams nextHeaderLayout = (MarginLayoutParams) nextHeader.getLayoutParams();
+    MarginLayoutParams stickyHeaderLayout = (MarginLayoutParams) currentHeader.getLayoutParams();
     if (orientation == LinearLayoutManager.VERTICAL) {
-      int topOfList = getListTop(recyclerView);
-      int shiftFromNextHeader = viewAfterNextHeader.getTop() - nextHeader.getHeight() - currentHeader.getHeight() - topOfList;
-      if (shiftFromNextHeader < topOfList) {
+      int topOfStickyHeader = getListTop(recyclerView) + stickyHeaderLayout.topMargin + stickyHeaderLayout.bottomMargin;
+      int shiftFromNextHeader = viewAfterNextHeader.getTop() - nextHeader.getHeight() - nextHeaderLayout.bottomMargin - nextHeaderLayout.topMargin - currentHeader.getHeight() - topOfStickyHeader;
+      if (shiftFromNextHeader < topOfStickyHeader) {
         translation.top += shiftFromNextHeader;
       }
     } else {
-      int leftOfList = getListLeft(recyclerView);
-      int shiftFromNextHeader = viewAfterNextHeader.getLeft() - nextHeader.getWidth() - currentHeader.getWidth() - leftOfList;
-      if (shiftFromNextHeader < leftOfList) {
+      int leftOfStickyHeader = getListLeft(recyclerView) + stickyHeaderLayout.leftMargin + stickyHeaderLayout.rightMargin;
+      int shiftFromNextHeader = viewAfterNextHeader.getLeft() - nextHeader.getWidth() - nextHeaderLayout.rightMargin - nextHeaderLayout.leftMargin - currentHeader.getWidth() - leftOfStickyHeader;
+      if (shiftFromNextHeader < leftOfStickyHeader) {
         translation.left += shiftFromNextHeader;
       }
     }
@@ -152,12 +166,17 @@ public class HeaderPositionCalculator {
    */
   private boolean itemIsObscuredByHeader(View item, View header, int orientation) {
     RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) item.getLayoutParams();
+    MarginLayoutParams headerLayout = (MarginLayoutParams) header.getLayoutParams();
     if (orientation == LinearLayoutManager.VERTICAL) {
-      if (item.getTop() - layoutParams.topMargin > header.getBottom()) {
+      int itemTop = item.getTop() - layoutParams.topMargin;
+      int headerBottom = header.getBottom() + headerLayout.bottomMargin + headerLayout.topMargin;
+      if (itemTop > headerBottom) {
         return false;
       }
     } else {
-      if (item.getLeft() - layoutParams.leftMargin > header.getRight()) {
+      int itemLeft = item.getLeft() - layoutParams.leftMargin;
+      int headerRight = header.getRight() + headerLayout.rightMargin + headerLayout.leftMargin;
+      if (itemLeft > headerRight) {
         return false;
       }
     }

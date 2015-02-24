@@ -13,6 +13,8 @@ import com.timehop.stickyheadersrecyclerview.rendering.HeaderRenderer;
 import com.timehop.stickyheadersrecyclerview.util.LinearLayoutOrientationProvider;
 import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
 
+import static android.view.ViewGroup.MarginLayoutParams;
+
 public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
 
   private final StickyRecyclerHeadersAdapter mAdapter;
@@ -59,10 +61,11 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
    * @param orientation used to calculate offset for the item
    */
   private void setItemOffsetsForHeader(Rect itemOffsets, View header, int orientation) {
+    MarginLayoutParams headerLayout = (MarginLayoutParams) header.getLayoutParams();
     if (orientation == LinearLayoutManager.VERTICAL) {
-      itemOffsets.top = header.getHeight();
+      itemOffsets.top = header.getHeight() + headerLayout.topMargin + headerLayout.bottomMargin;
     } else {
-      itemOffsets.left = header.getWidth();
+      itemOffsets.left = header.getWidth() + headerLayout.leftMargin + headerLayout.rightMargin;
     }
   }
 

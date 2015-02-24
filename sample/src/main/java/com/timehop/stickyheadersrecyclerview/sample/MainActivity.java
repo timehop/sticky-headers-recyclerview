@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
 
     // Set adapter populated with example dummy data
     final SampleArrayHeadersAdapter mAdapter = new SampleArrayHeadersAdapter();
+    mAdapter.add("Animals below!");
     mAdapter.addAll(getDummyDataSet());
     recyclerView.setAdapter(mAdapter);
 
@@ -94,7 +95,11 @@ public class MainActivity extends Activity {
 
     @Override
     public long getHeaderId(int position) {
-      return getItem(position).charAt(0);
+      if (position == 0) {
+        return -1;
+      } else {
+        return getItem(position).charAt(0);
+      }
     }
 
     @Override
