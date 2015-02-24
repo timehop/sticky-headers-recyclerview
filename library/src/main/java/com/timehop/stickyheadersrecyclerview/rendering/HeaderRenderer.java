@@ -4,12 +4,23 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
+
+import com.timehop.stickyheadersrecyclerview.calculation.DimensionCalculator;
 
 /**
  * Responsible for drawing headers to the canvas provided by the item decoration
  */
 public class HeaderRenderer {
+
+  private final DimensionCalculator mDimensionCalculator;
+
+  public HeaderRenderer() {
+    this(new DimensionCalculator());
+  }
+
+  private HeaderRenderer(DimensionCalculator dimensionCalculator) {
+    mDimensionCalculator = dimensionCalculator;
+  }
 
   /**
    * Draws a header to a canvas, offsetting by some x and y amount
@@ -22,14 +33,14 @@ public class HeaderRenderer {
   public void drawHeader(RecyclerView recyclerView, Canvas canvas, View header, Rect offset) {
     canvas.save();
 
-    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
+    Rect recyclerMargins = mDimensionCalculator.getMargins(recyclerView);
     // Clip drawing of headers to the padding of the RecyclerView. Avoids drawing in the padding
     if (recyclerView.getLayoutManager().getClipToPadding()) {
       Rect clipRect = new Rect(
-          recyclerView.getLeft() - layoutParams.leftMargin + recyclerView.getPaddingLeft(),
-          recyclerView.getTop() - layoutParams.topMargin + recyclerView.getPaddingTop(),
-          recyclerView.getRight() - layoutParams.rightMargin - recyclerView.getPaddingRight(),
-          recyclerView.getBottom() - layoutParams.bottomMargin - recyclerView.getPaddingBottom());
+          recyclerView.getLeft() - recyclerMargins.left + recyclerView.getPaddingLeft(),
+          recyclerView.getTop() - recyclerMargins.top + recyclerView.getPaddingTop(),
+          recyclerView.getRight() - recyclerMargins.right - recyclerView.getPaddingRight(),
+          recyclerView.getBottom() - recyclerMargins.bottom - recyclerView.getPaddingBottom());
       canvas.clipRect(clipRect);
     }
 

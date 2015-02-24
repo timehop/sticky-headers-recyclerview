@@ -9,11 +9,10 @@ import android.view.View;
 
 import com.timehop.stickyheadersrecyclerview.caching.HeaderProvider;
 import com.timehop.stickyheadersrecyclerview.caching.HeaderViewCache;
+import com.timehop.stickyheadersrecyclerview.calculation.DimensionCalculator;
 import com.timehop.stickyheadersrecyclerview.rendering.HeaderRenderer;
 import com.timehop.stickyheadersrecyclerview.util.LinearLayoutOrientationProvider;
 import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
-
-import static android.view.ViewGroup.MarginLayoutParams;
 
 public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
 
@@ -23,24 +22,42 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   private final OrientationProvider mOrientationProvider;
   private final HeaderPositionCalculator mHeaderPositionCalculator;
   private final HeaderRenderer mRenderer;
+  private final DimensionCalculator mDimensionCalculator;
 
   public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter) {
-    this(adapter, new LinearLayoutOrientationProvider());
+    this(adapter, new HeaderRenderer(), new LinearLayoutOrientationProvider(), new DimensionCalculator());
   }
 
   private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
-                                          OrientationProvider orientationProvider) {
-    this(adapter, orientationProvider, new HeaderViewCache(adapter, orientationProvider));
-  }
-
-  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
+                                          HeaderRenderer headerRenderer,
                                           OrientationProvider orientationProvider,
+                                          DimensionCalculator dimensionCalculator) {
+    this(adapter, headerRenderer, orientationProvider, dimensionCalculator,
+        new HeaderViewCache(adapter, orientationProvider));
+  }
+
+  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
+                                          HeaderRenderer headerRenderer,
+                                          OrientationProvider orientationProvider,
+                                          DimensionCalculator dimensionCalculator,
                                           HeaderProvider headerProvider) {
+    this(adapter, headerRenderer, orientationProvider, dimensionCalculator, headerProvider,
+        new HeaderPositionCalculator(adapter, headerProvider, orientationProvider,
+            dimensionCalculator));
+  }
+
+  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
+                                          HeaderRenderer headerRenderer,
+                                          OrientationProvider orientationProvider,
+                                          DimensionCalculator dimensionCalculator,
+                                          HeaderProvider headerProvider,
+                                          HeaderPositionCalculator headerPositionCalculator) {
     mAdapter = adapter;
     mHeaderProvider = headerProvider;
     mOrientationProvider = orientationProvider;
-    mRenderer = new HeaderRenderer();
-    mHeaderPositionCalculator = new HeaderPositionCalculator(adapter, headerProvider, orientationProvider);
+    mRenderer = headerRenderer;
+    mDimensionCalculator = dimensionCalculator;
+    mHeaderPositionCalculator = headerPositionCalculator;
   }
 
   @Override
@@ -61,11 +78,11 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
    * @param orientation used to calculate offset for the item
    */
   private void setItemOffsetsForHeader(Rect itemOffsets, View header, int orientation) {
-    MarginLayoutParams headerLayout = (MarginLayoutParams) header.getLayoutParams();
+    Rect headerMargins = mDimensionCalculator.getMargins(header);
     if (orientation == LinearLayoutManager.VERTICAL) {
-      itemOffsets.top = header.getHeight() + headerLayout.topMargin + headerLayout.bottomMargin;
+      itemOffsets.top = header.getHeight() + headerMargins.top + headerMargins.bottom;
     } else {
-      itemOffsets.left = header.getWidth() + headerLayout.leftMargin + headerLayout.rightMargin;
+      itemOffsets.left = header.getWidth() + headerMargins.left + headerMargins.right;
     }
   }
 
@@ -92,7 +109,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   }
 
   private boolean hasStickyHeader(int listChildPosition, int indexInList) {
-    if (listChildPosition > 0 || mAdapter.getHeaderId(indexInList) <= 0) {
+    if (listChildPosition > 0 || mAdapter.getHeaderId(indexInList) < 0) {
       return false;
     }
 
