@@ -19,7 +19,7 @@ public class HeaderViewCache implements HeaderProvider {
   private final OrientationProvider mOrientationProvider;
 
   public HeaderViewCache(StickyRecyclerHeadersAdapter adapter,
-                         OrientationProvider orientationProvider) {
+      OrientationProvider orientationProvider) {
     mAdapter = adapter;
     mOrientationProvider = orientationProvider;
   }

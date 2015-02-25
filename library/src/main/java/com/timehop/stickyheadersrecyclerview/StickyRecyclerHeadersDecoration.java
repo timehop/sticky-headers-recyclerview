@@ -29,29 +29,22 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     this(adapter, new LinearLayoutOrientationProvider(), new DimensionCalculator());
   }
 
-  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
-                                          OrientationProvider orientationProvider,
-                                          DimensionCalculator dimensionCalculator) {
+  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
+      DimensionCalculator dimensionCalculator) {
     this(adapter, orientationProvider, dimensionCalculator, new HeaderRenderer(orientationProvider),
         new HeaderViewCache(adapter, orientationProvider));
   }
 
-  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
-                                          OrientationProvider orientationProvider,
-                                          DimensionCalculator dimensionCalculator,
-                                          HeaderRenderer headerRenderer,
-                                          HeaderProvider headerProvider) {
+  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
+      DimensionCalculator dimensionCalculator, HeaderRenderer headerRenderer, HeaderProvider headerProvider) {
     this(adapter, headerRenderer, orientationProvider, dimensionCalculator, headerProvider,
         new HeaderPositionCalculator(adapter, headerProvider, orientationProvider,
             dimensionCalculator));
   }
 
-  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
-                                          HeaderRenderer headerRenderer,
-                                          OrientationProvider orientationProvider,
-                                          DimensionCalculator dimensionCalculator,
-                                          HeaderProvider headerProvider,
-                                          HeaderPositionCalculator headerPositionCalculator) {
+  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, HeaderRenderer headerRenderer,
+      OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator, HeaderProvider headerProvider,
+      HeaderPositionCalculator headerPositionCalculator) {
     mAdapter = adapter;
     mHeaderProvider = headerProvider;
     mOrientationProvider = orientationProvider;

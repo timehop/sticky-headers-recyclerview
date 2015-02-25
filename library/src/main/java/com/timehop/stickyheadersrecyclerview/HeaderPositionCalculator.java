@@ -19,10 +19,8 @@ public class HeaderPositionCalculator {
   private final HeaderProvider mHeaderProvider;
   private final DimensionCalculator mDimensionCalculator;
 
-  public HeaderPositionCalculator(StickyRecyclerHeadersAdapter adapter,
-                                  HeaderProvider headerProvider,
-                                  OrientationProvider orientationProvider,
-                                  DimensionCalculator dimensionCalculator) {
+  public HeaderPositionCalculator(StickyRecyclerHeadersAdapter adapter, HeaderProvider headerProvider,
+      OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator) {
     mAdapter = adapter;
     mHeaderProvider = headerProvider;
     mOrientationProvider = orientationProvider;
@@ -112,7 +110,7 @@ public class HeaderPositionCalculator {
           return true;
         }
       } else {
-        int leftOfNextHeader = viewAfterHeader.getLeft() - nextHeaderMargins.right- nextHeader.getWidth() - nextHeaderMargins.left;
+        int leftOfNextHeader = viewAfterHeader.getLeft() - nextHeaderMargins.right - nextHeader.getWidth() - nextHeaderMargins.left;
         int rightOfThisHeader = recyclerView.getPaddingLeft() + stickyHeader.getRight() + headerMargins.left + headerMargins.right;
         if (leftOfNextHeader < rightOfThisHeader) {
           return true;
@@ -123,9 +121,8 @@ public class HeaderPositionCalculator {
     return false;
   }
 
-  private void translateHeaderWithNextHeader(RecyclerView recyclerView, int orientation,
-                                             Rect translation, View currentHeader,
-                                             View viewAfterNextHeader, View nextHeader) {
+  private void translateHeaderWithNextHeader(RecyclerView recyclerView, int orientation, Rect translation,
+      View currentHeader, View viewAfterNextHeader, View nextHeader) {
     Rect nextHeaderMargins = mDimensionCalculator.getMargins(nextHeader);
     Rect stickyHeaderMargins = mDimensionCalculator.getMargins(currentHeader);
     if (orientation == LinearLayoutManager.VERTICAL) {
