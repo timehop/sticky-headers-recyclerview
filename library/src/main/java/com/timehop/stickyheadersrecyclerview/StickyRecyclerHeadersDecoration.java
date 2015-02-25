@@ -24,22 +24,22 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   private final HeaderRenderer mRenderer;
   private final DimensionCalculator mDimensionCalculator;
 
+  // TODO: Consider passing in orientation to simplify orientation accounting within calculation
   public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter) {
-    this(adapter, new HeaderRenderer(), new LinearLayoutOrientationProvider(), new DimensionCalculator());
+    this(adapter, new LinearLayoutOrientationProvider(), new DimensionCalculator());
   }
 
   private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
-                                          HeaderRenderer headerRenderer,
                                           OrientationProvider orientationProvider,
                                           DimensionCalculator dimensionCalculator) {
-    this(adapter, headerRenderer, orientationProvider, dimensionCalculator,
+    this(adapter, orientationProvider, dimensionCalculator, new HeaderRenderer(orientationProvider),
         new HeaderViewCache(adapter, orientationProvider));
   }
 
   private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter,
-                                          HeaderRenderer headerRenderer,
                                           OrientationProvider orientationProvider,
                                           DimensionCalculator dimensionCalculator,
+                                          HeaderRenderer headerRenderer,
                                           HeaderProvider headerProvider) {
     this(adapter, headerRenderer, orientationProvider, dimensionCalculator, headerProvider,
         new HeaderPositionCalculator(adapter, headerProvider, orientationProvider,

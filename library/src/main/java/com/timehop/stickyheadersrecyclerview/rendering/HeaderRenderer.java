@@ -4,8 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.timehop.stickyheadersrecyclerview.calculation.DimensionCalculator;
+import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
 
 /**
  * Responsible for drawing headers to the canvas provided by the item decoration
@@ -13,12 +15,15 @@ import com.timehop.stickyheadersrecyclerview.calculation.DimensionCalculator;
 public class HeaderRenderer {
 
   private final DimensionCalculator mDimensionCalculator;
+  private final OrientationProvider mOrientationProvider;
 
-  public HeaderRenderer() {
-    this(new DimensionCalculator());
+  public HeaderRenderer(OrientationProvider orientationProvider) {
+    this(orientationProvider, new DimensionCalculator());
   }
 
-  private HeaderRenderer(DimensionCalculator dimensionCalculator) {
+  private HeaderRenderer(OrientationProvider orientationProvider,
+                         DimensionCalculator dimensionCalculator) {
+    mOrientationProvider = orientationProvider;
     mDimensionCalculator = dimensionCalculator;
   }
 
@@ -33,14 +38,9 @@ public class HeaderRenderer {
   public void drawHeader(RecyclerView recyclerView, Canvas canvas, View header, Rect offset) {
     canvas.save();
 
-    Rect recyclerMargins = mDimensionCalculator.getMargins(recyclerView);
-    // Clip drawing of headers to the padding of the RecyclerView. Avoids drawing in the padding
     if (recyclerView.getLayoutManager().getClipToPadding()) {
-      Rect clipRect = new Rect(
-          recyclerView.getLeft() - recyclerMargins.left + recyclerView.getPaddingLeft(),
-          recyclerView.getTop() - recyclerMargins.top + recyclerView.getPaddingTop(),
-          recyclerView.getRight() - recyclerMargins.right - recyclerView.getPaddingRight(),
-          recyclerView.getBottom() - recyclerMargins.bottom - recyclerView.getPaddingBottom());
+      // Clip drawing of headers to the padding of the RecyclerView. Avoids drawing in the padding
+      Rect clipRect = getClipRectForHeader(recyclerView, header);
       canvas.clipRect(clipRect);
     }
 
@@ -48,6 +48,34 @@ public class HeaderRenderer {
 
     header.draw(canvas);
     canvas.restore();
+  }
+
+  /**
+   * Gets a clipping rect for the header based on the margins of the header and the padding of the
+   * recycler.
+   * FIXME: Currently right margin in VERTICAL orientation and bottom margin in HORIZONTAL
+   * orientation are clipped so they look accurate, but the headers are not being drawn at the
+   * correctly smaller width and height respectively.
+   *
+   * @param recyclerView for which to provide a header
+   * @param header for clipping
+   * @return a {@link Rect} for clipping a provided header to the padding of a recycler view
+   */
+  private Rect getClipRectForHeader(RecyclerView recyclerView, View header) {
+    Rect headerMargins = mDimensionCalculator.getMargins(header);
+    if (mOrientationProvider.getOrientation(recyclerView) == LinearLayout.VERTICAL) {
+      return new Rect(
+          recyclerView.getPaddingLeft(),
+          recyclerView.getPaddingTop(),
+          recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
+          recyclerView.getHeight() - recyclerView.getPaddingBottom());
+    } else {
+      return new Rect(
+          recyclerView.getPaddingLeft(),
+          recyclerView.getPaddingTop(),
+          recyclerView.getWidth() - recyclerView.getPaddingRight(),
+          recyclerView.getHeight() - recyclerView.getPaddingBottom() - headerMargins.bottom);
+    }
   }
 
 }

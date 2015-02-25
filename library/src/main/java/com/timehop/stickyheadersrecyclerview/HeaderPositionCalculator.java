@@ -109,7 +109,6 @@ public class HeaderPositionCalculator {
         int topOfNextHeader = viewAfterHeader.getTop() - nextHeaderMargins.bottom - nextHeader.getHeight() - nextHeaderMargins.top;
         int bottomOfThisHeader = recyclerView.getPaddingTop() + stickyHeader.getBottom() + headerMargins.top + headerMargins.bottom;
         if (topOfNextHeader < bottomOfThisHeader) {
-          /*getListTop(recyclerView) + headerLayout.topMargin + stickyHeader.getHeight()*/
           return true;
         }
       } else {
@@ -189,25 +188,19 @@ public class HeaderPositionCalculator {
   }
 
   private int getListTop(RecyclerView view) {
-    Rect viewMargins = mDimensionCalculator.getMargins(view);
-    int top = view.getTop() - viewMargins.top;
-
     if (view.getLayoutManager().getClipToPadding()) {
-      top += view.getPaddingTop();
+      return view.getPaddingTop();
+    } else {
+      return 0;
     }
-
-    return top;
   }
 
   private int getListLeft(RecyclerView view) {
-    Rect viewMargins = mDimensionCalculator.getMargins(view);
-    int left = view.getLeft() - viewMargins.left;
-
     if (view.getLayoutManager().getClipToPadding()) {
-      left += view.getPaddingLeft();
+      return view.getPaddingLeft();
+    } else {
+      return 0;
     }
-
-    return left;
   }
 
 }
