@@ -9,4 +9,5 @@
     android:padding="@dimen/small"
     android:textSize="14sp"
     tools:text="Aardvark"
+    android:background="@android:color/white"
     tools:context=".MainActivity"/>

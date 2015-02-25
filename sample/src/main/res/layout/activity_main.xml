@@ -2,12 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:paddingTop="18dp"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:saveEnabled="false"/>
+        android:layout_margin="18dp"
+        android:padding="16dp"
+        android:background="#ffbef0ff"
+        android:saveEnabled="false"
+        android:clipToPadding="true"
+        />
 
 </RelativeLayout>
