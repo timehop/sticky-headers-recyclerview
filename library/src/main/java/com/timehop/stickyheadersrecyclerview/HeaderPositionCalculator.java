@@ -149,7 +149,7 @@ public class HeaderPositionCalculator {
   private View getFirstViewUnobscuredByHeader(RecyclerView parent, View firstHeader) {
     for (int i = 0; i < parent.getChildCount(); i++) {
       View child = parent.getChildAt(i);
-      if (!itemIsObscuredByHeader(child, firstHeader, mOrientationProvider.getOrientation(parent))) {
+      if (!itemIsObscuredByHeader(parent, child, firstHeader, mOrientationProvider.getOrientation(parent))) {
         return child;
       }
     }
@@ -159,14 +159,23 @@ public class HeaderPositionCalculator {
   /**
    * Determines if an item is obscured by a header
    *
+   *
+   * @param parent
    * @param item        to determine if obscured by header
    * @param header      that might be obscuring the item
    * @param orientation of the {@link RecyclerView}
    * @return true if the item view is obscured by the header view
    */
-  private boolean itemIsObscuredByHeader(View item, View header, int orientation) {
+  private boolean itemIsObscuredByHeader(RecyclerView parent, View item, View header, int orientation) {
     RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) item.getLayoutParams();
     Rect headerMargins = mDimensionCalculator.getMargins(header);
+
+    if (mHeaderProvider.getHeader(parent, parent.getChildPosition(item)) != header) {
+      // Resolves https://github.com/timehop/sticky-headers-recyclerview/issues/36
+      // Handles an edge case where a trailing header is smaller than the current sticky header.
+      return false;
+    }
+
     if (orientation == LinearLayoutManager.VERTICAL) {
       int itemTop = item.getTop() - layoutParams.topMargin;
       int headerBottom = header.getBottom() + headerMargins.bottom + headerMargins.top;
