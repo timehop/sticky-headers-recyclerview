@@ -73,7 +73,7 @@ mRecyclerView.addOnItemTouchListener(touchListener);
 Compatibility
 -------------
 
-This should work everywhere that RecyclerView does (API 7+).
+This should work in API 14+.
 
 Known Issues
 ------------
