@@ -36,28 +36,21 @@ public class HeaderPositionCalculator {
    * @see {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
    */
   public boolean hasNewHeader(int position) {
-    if (getFirstHeaderPosition() == position) {
-      return true;
-    }
-
-    if (mAdapter.getHeaderId(position) < 0 || indexOutOfBounds(position)) {
+    if (indexOutOfBounds(position)) {
       return false;
     }
 
-    return mAdapter.getHeaderId(position) != mAdapter.getHeaderId(position - 1);
+    long headerId = mAdapter.getHeaderId(position);
+
+    if (headerId < 0) {
+      return false;
+    }
+
+    return position == 0 || headerId != mAdapter.getHeaderId(position - 1);
   }
 
   private boolean indexOutOfBounds(int position) {
     return position < 0 || position >= mAdapter.getItemCount();
-  }
-
-  private int getFirstHeaderPosition() {
-    for (int i = 0; i < mAdapter.getItemCount(); i++) {
-      if (mAdapter.getHeaderId(i) >= 0) {
-        return i;
-      }
-    }
-    return -1;
   }
 
   public Rect getHeaderBounds(RecyclerView recyclerView, View header, View firstView, boolean firstHeader) {
