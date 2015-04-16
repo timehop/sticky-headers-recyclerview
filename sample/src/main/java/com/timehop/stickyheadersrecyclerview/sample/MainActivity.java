@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     recyclerView.setLayoutManager(layoutManager);
 
     // Add the sticky headers decoration
-    StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
+    final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
     recyclerView.addItemDecoration(headersDecor);
 
     // Add decoration for dividers between list items
@@ -63,6 +63,11 @@ public class MainActivity extends Activity {
         mAdapter.remove(mAdapter.getItem(position));
       }
     }));
+    mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+      @Override public void onChanged() {
+        headersDecor.invalidateHeaders();
+      }
+    });
   }
 
   private String[] getDummyDataSet() {

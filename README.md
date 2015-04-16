@@ -16,7 +16,7 @@ Here is a quick video of it in action (click to see the full video):
 Download
 --------
 
-    compile 'com.timehop.stickyheadersrecyclerview:library:0.3.6@aar'
+    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.0@aar'
 
 Usage
 -----
@@ -52,7 +52,7 @@ mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 mRecyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(mAdapter));
 ```
 
-Finally, `StickyRecyclerHeadersTouchListener` allows you to listen for clicks on header views.
+`StickyRecyclerHeadersTouchListener` allows you to listen for clicks on header views.
 Simply create an instance of `StickyRecyclerHeadersTouchListener`, set the `OnHeaderClickListener`,
 and add the `StickyRecyclerHeadersTouchListener` as a touch listener to your `RecyclerView`.
 
@@ -70,6 +70,18 @@ touchListener.setOnHeaderClickListener(
 mRecyclerView.addOnItemTouchListener(touchListener);
 ```
 
+The StickyHeaders aren't aware of your adapter so if you must notify them when your data set changes.
+
+```java
+    mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+      @Override public void onChanged() {
+        headersDecor.invalidateHeaders();
+      }
+    });
+```
+
+Item animators don't play nicely with RecyclerView decorations, so your mileage with that may vary.
+
 Compatibility
 -------------
 
@@ -84,6 +96,8 @@ Known Issues
 
 Version History
 ---------------
+0.4.0 (4/16/2015) - Code reorganization by danoz73, fixes for different sized headers, performance improvements
+
 0.3.6 (1/30/2015) - Prevent header clicks from passing on the touch event
 
 0.3.5 (12/12/2014) - Add StickyRecyclerHeadersDecoration.invalidateHeaders() method
