@@ -88,25 +88,23 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       return;
     }
 
-    for (int i = 0; i < parent.getChildCount(); i++) {
-      View itemView = parent.getChildAt(i);
-      int position = parent.getChildPosition(itemView);
-      if (hasStickyHeader(i, position) || mHeaderPositionCalculator.hasNewHeader(position)) {
-        View header = mHeaderProvider.getHeader(parent, position);
-        Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header,
-            itemView, hasStickyHeader(i, position));
-        mRenderer.drawHeader(parent, canvas, header, headerOffset);
-        mHeaderRects.put(position, headerOffset);
+    RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+    if ( layoutManager instanceof LinearLayoutManager ) {
+      LinearLayoutManager linearLayoutManager = (LinearLayoutManager)layoutManager;
+      int first = linearLayoutManager.findFirstVisibleItemPosition();
+      int last = linearLayoutManager.findLastVisibleItemPosition();
+      for ( int i = first; i <= last; i++ ) {
+        boolean hasStickyHeader = ( i == first && mAdapter.getHeaderId( first ) >= 0 );
+        View itemView = linearLayoutManager.findViewByPosition( i );
+        if ( hasStickyHeader || mHeaderPositionCalculator.hasNewHeader( i ) ) {
+          View header = mHeaderProvider.getHeader(parent, i);
+          Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header,
+                  itemView, hasStickyHeader);
+          mRenderer.drawHeader(parent, canvas, header, headerOffset);
+          mHeaderRects.put(i, headerOffset);
+        }
       }
     }
-  }
-
-  private boolean hasStickyHeader(int listChildPosition, int indexInList) {
-    if (listChildPosition > 0 || mAdapter.getHeaderId(indexInList) < 0) {
-      return false;
-    }
-
-    return true;
   }
 
   /**
