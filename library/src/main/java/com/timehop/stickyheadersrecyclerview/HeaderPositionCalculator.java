@@ -59,7 +59,7 @@ public class HeaderPositionCalculator {
 
     if (firstHeader && isStickyHeaderBeingPushedOffscreen(recyclerView, header)) {
       View viewAfterNextHeader = getFirstViewUnobscuredByHeader(recyclerView, header);
-      int firstViewUnderHeaderPosition = recyclerView.getChildPosition(viewAfterNextHeader);
+      int firstViewUnderHeaderPosition = recyclerView.getChildAdapterPosition(viewAfterNextHeader);
       View secondHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
       translateHeaderWithNextHeader(recyclerView, mOrientationProvider.getOrientation(recyclerView), bounds,
           header, viewAfterNextHeader, secondHeader);
@@ -89,7 +89,7 @@ public class HeaderPositionCalculator {
 
   private boolean isStickyHeaderBeingPushedOffscreen(RecyclerView recyclerView, View stickyHeader) {
     View viewAfterHeader = getFirstViewUnobscuredByHeader(recyclerView, stickyHeader);
-    int firstViewUnderHeaderPosition = recyclerView.getChildPosition(viewAfterHeader);
+    int firstViewUnderHeaderPosition = recyclerView.getChildAdapterPosition(viewAfterHeader);
 
     if (firstViewUnderHeaderPosition > 0 && hasNewHeader(firstViewUnderHeaderPosition)) {
       View nextHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
@@ -163,7 +163,7 @@ public class HeaderPositionCalculator {
     RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) item.getLayoutParams();
     Rect headerMargins = mDimensionCalculator.getMargins(header);
 
-    if (mHeaderProvider.getHeader(parent, parent.getChildPosition(item)) != header) {
+    if (mHeaderProvider.getHeader(parent, parent.getChildAdapterPosition(item)) != header) {
       // Resolves https://github.com/timehop/sticky-headers-recyclerview/issues/36
       // Handles an edge case where a trailing header is smaller than the current sticky header.
       return false;
