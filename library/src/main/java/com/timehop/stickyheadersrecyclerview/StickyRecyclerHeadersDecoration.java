@@ -88,21 +88,18 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       return;
     }
 
-    RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-    if ( layoutManager instanceof LinearLayoutManager ) {
-      LinearLayoutManager linearLayoutManager = (LinearLayoutManager)layoutManager;
-      int first = linearLayoutManager.findFirstVisibleItemPosition();
-      int last = linearLayoutManager.findLastVisibleItemPosition();
-      for ( int i = first; i <= last; i++ ) {
-        boolean hasStickyHeader = ( i == first && mAdapter.getHeaderId( first ) >= 0 );
-        View itemView = linearLayoutManager.findViewByPosition( i );
-        if ( hasStickyHeader || mHeaderPositionCalculator.hasNewHeader( i ) ) {
-          View header = mHeaderProvider.getHeader(parent, i);
-          Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header,
-                  itemView, hasStickyHeader);
-          mRenderer.drawHeader(parent, canvas, header, headerOffset);
-          mHeaderRects.put(i, headerOffset);
-        }
+    LinearLayoutManager linearLayoutManager = (LinearLayoutManager)parent.getLayoutManager();
+    int first = linearLayoutManager.findFirstVisibleItemPosition();
+    int last = linearLayoutManager.findLastVisibleItemPosition();
+    for (int i = first; i <= last; i++) {
+      boolean hasStickyHeader = (i == first && mAdapter.getHeaderId(i) >= 0);
+      View itemView = linearLayoutManager.findViewByPosition(i);
+      if (hasStickyHeader || mHeaderPositionCalculator.hasNewHeader(i)) {
+        View header = mHeaderProvider.getHeader(parent, i);
+        Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header,
+            itemView, hasStickyHeader);
+        mRenderer.drawHeader(parent, canvas, header, headerOffset);
+        mHeaderRects.put(i, headerOffset);
       }
     }
   }
