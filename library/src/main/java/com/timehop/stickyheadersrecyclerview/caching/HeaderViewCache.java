@@ -1,8 +1,9 @@
 package com.timehop.stickyheadersrecyclerview.caching;
 
-import android.support.v4.util.LongSparseArray;
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,8 +16,10 @@ import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
 public class HeaderViewCache implements HeaderProvider {
 
   private final StickyRecyclerHeadersAdapter mAdapter;
-  private final LongSparseArray<View> mHeaderViews = new LongSparseArray<>();
+  private RecyclerView.ViewHolder mViewHolder;
   private final OrientationProvider mOrientationProvider;
+
+  private static final String TAG = HeaderViewCache.class.getSimpleName();
 
   public HeaderViewCache(StickyRecyclerHeadersAdapter adapter,
       OrientationProvider orientationProvider) {
@@ -26,14 +29,13 @@ public class HeaderViewCache implements HeaderProvider {
 
   @Override
   public View getHeader(RecyclerView parent, int position) {
-    long headerId = mAdapter.getHeaderId(position);
 
-    View header = mHeaderViews.get(headerId);
-    if (header == null) {
-      //TODO - recycle views
-      RecyclerView.ViewHolder viewHolder = mAdapter.onCreateHeaderViewHolder(parent);
-      mAdapter.onBindHeaderViewHolder(viewHolder, position);
-      header = viewHolder.itemView;
+    if (mViewHolder == null) {
+      mViewHolder = mAdapter.onCreateHeaderViewHolder(parent);
+      mAdapter.onBindHeaderViewHolder(mViewHolder, position);
+      View header = mViewHolder.itemView;
+      Log.i(TAG, "viewHeader null: itemView " + header.toString());
+
       if (header.getLayoutParams() == null) {
         header.setLayoutParams(new ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -56,13 +58,16 @@ public class HeaderViewCache implements HeaderProvider {
           parent.getPaddingTop() + parent.getPaddingBottom(), header.getLayoutParams().height);
       header.measure(childWidth, childHeight);
       header.layout(0, 0, header.getMeasuredWidth(), header.getMeasuredHeight());
-      mHeaderViews.put(headerId, header);
+    } else {
+//      Log.i(TAG, "onBind requested: itemView " + mViewHolder.itemView);
+      mAdapter.onBindHeaderViewHolder(mViewHolder, position);
     }
-    return header;
+
+    return mViewHolder.itemView;
   }
 
   @Override
   public void invalidate() {
-    mHeaderViews.clear();
+//    mHeaderViews.clear();
   }
 }

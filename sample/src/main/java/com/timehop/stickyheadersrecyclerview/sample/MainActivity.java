@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,10 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
 import java.security.SecureRandom;
+import java.util.HashMap;
 
 public class MainActivity extends Activity {
+  public static final String TAG = MainActivity.class.getSimpleName();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,9 @@ public class MainActivity extends Activity {
 
   private class SampleArrayHeadersAdapter extends RecyclerArrayAdapter<String, RecyclerView.ViewHolder>
       implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+
+    HashMap<Long, Integer> mBackgroundColorMap = new HashMap<>();
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view = LayoutInflater.from(parent.getContext())
@@ -94,12 +100,14 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+//      Log.i(TAG, "onBindViewHolder: position: " + position);
       TextView textView = (TextView) holder.itemView;
       textView.setText(getItem(position));
     }
 
     @Override
     public long getHeaderId(int position) {
+//      Log.i(TAG, "getHeaderId: " + position);
       if (position == 0) {
         return -1;
       } else {
@@ -117,9 +125,22 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+//      Log.i(TAG, "MA/onBindHeaderViewHolder headerId: " + getHeaderId(position));
+//      Log.i(TAG, "MA getItem: " + getItem(position));
       TextView textView = (TextView) holder.itemView;
       textView.setText(String.valueOf(getItem(position).charAt(0)));
-      holder.itemView.setBackgroundColor(getRandomColor());
+
+      // Get the color mapped to the header Id
+      long headerId = getHeaderId(position);
+      Integer backgroundColor = mBackgroundColorMap.get(getHeaderId(position));
+
+      if (backgroundColor == null) {
+        backgroundColor = getRandomColor();
+        mBackgroundColorMap.put(headerId, backgroundColor);
+      }
+
+      textView.setBackgroundColor(backgroundColor);
+//      holder.itemView.setBackgroundColor(getRandomColor());
     }
 
     private int getRandomColor() {
