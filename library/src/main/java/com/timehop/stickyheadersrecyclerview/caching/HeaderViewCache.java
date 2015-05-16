@@ -1,21 +1,25 @@
 package com.timehop.stickyheadersrecyclerview.caching;
 
-import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
 
 /**
- * An implementation of {@link HeaderProvider} that creates and caches header views
+ * An implementation of {@link HeaderProvider} that creates one header view managed by a
+ * {@link android.support.v7.widget.RecyclerView.ViewHolder}. Each call to
+ * {@link HeaderViewCache#getHeader(RecyclerView, int)}  updates the header to the specified
+ * position with
+ * {@link StickyRecyclerHeadersAdapter#onBindHeaderViewHolder(RecyclerView.ViewHolder, int)}.
+ *
+ * If a ViewHolder/View does not exist, it will be created, measured, and inflated.
  */
 public class HeaderViewCache implements HeaderProvider {
 
   private final StickyRecyclerHeadersAdapter mAdapter;
-  private final LongSparseArray<View> mHeaderViews = new LongSparseArray<>();
+  private RecyclerView.ViewHolder mViewHolder;
   private final OrientationProvider mOrientationProvider;
 
   public HeaderViewCache(StickyRecyclerHeadersAdapter adapter,
@@ -26,14 +30,12 @@ public class HeaderViewCache implements HeaderProvider {
 
   @Override
   public View getHeader(RecyclerView parent, int position) {
-    long headerId = mAdapter.getHeaderId(position);
+    if (mViewHolder == null) {
+      // Create the ViewHolder if it doesn't exist and bind values to it
+      mViewHolder = mAdapter.onCreateHeaderViewHolder(parent);
+      mAdapter.onBindHeaderViewHolder(mViewHolder, position);
+      View header = mViewHolder.itemView;
 
-    View header = mHeaderViews.get(headerId);
-    if (header == null) {
-      //TODO - recycle views
-      RecyclerView.ViewHolder viewHolder = mAdapter.onCreateHeaderViewHolder(parent);
-      mAdapter.onBindHeaderViewHolder(viewHolder, position);
-      header = viewHolder.itemView;
       if (header.getLayoutParams() == null) {
         header.setLayoutParams(new ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -56,13 +58,14 @@ public class HeaderViewCache implements HeaderProvider {
           parent.getPaddingTop() + parent.getPaddingBottom(), header.getLayoutParams().height);
       header.measure(childWidth, childHeight);
       header.layout(0, 0, header.getMeasuredWidth(), header.getMeasuredHeight());
-      mHeaderViews.put(headerId, header);
+    } else {
+        mAdapter.onBindHeaderViewHolder(mViewHolder, position);
     }
-    return header;
+
+    return mViewHolder.itemView;
   }
 
   @Override
   public void invalidate() {
-    mHeaderViews.clear();
   }
 }

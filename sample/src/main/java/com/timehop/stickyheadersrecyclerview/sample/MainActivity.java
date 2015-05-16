@@ -17,6 +17,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
 import java.security.SecureRandom;
+import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
@@ -84,6 +85,9 @@ public class MainActivity extends Activity {
 
   private class SampleArrayHeadersAdapter extends RecyclerArrayAdapter<String, RecyclerView.ViewHolder>
       implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+
+    HashMap<Long, Integer> mBackgroundColorMap = new HashMap<>();
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view = LayoutInflater.from(parent.getContext())
@@ -100,6 +104,7 @@ public class MainActivity extends Activity {
 
     @Override
     public long getHeaderId(int position) {
+      // Don't count first row when drawing headers; it's set to "Animals below!"
       if (position == 0) {
         return -1;
       } else {
@@ -115,11 +120,22 @@ public class MainActivity extends Activity {
       };
     }
 
+    // TODO: consider changing onBindHeaderViewHolder interface to take headerId instead of position to match the consistency with onBindViewHolder
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
       TextView textView = (TextView) holder.itemView;
-      textView.setText(String.valueOf(getItem(position).charAt(0)));
-      holder.itemView.setBackgroundColor(getRandomColor());
+      textView.setText(getItem(position));
+
+      // Get the color mapped to the header Id
+      long headerId = getHeaderId(position);
+      Integer backgroundColor = mBackgroundColorMap.get(headerId);
+
+      if (backgroundColor == null) {
+        backgroundColor = getRandomColor();
+        mBackgroundColorMap.put(headerId, backgroundColor);
+      }
+
+      textView.setBackgroundColor(backgroundColor);
     }
 
     private int getRandomColor() {
