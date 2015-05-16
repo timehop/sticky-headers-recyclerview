@@ -3,7 +3,9 @@ package com.timehop.stickyheadersrecyclerview;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.timehop.stickyheadersrecyclerview.caching.HeaderProvider;
 import com.timehop.stickyheadersrecyclerview.calculation.DimensionCalculator;
@@ -13,7 +15,6 @@ import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
  * Calculates the position and location of header views
  */
 public class HeaderPositionCalculator {
-
   private final StickyRecyclerHeadersAdapter mAdapter;
   private final OrientationProvider mOrientationProvider;
   private final HeaderProvider mHeaderProvider;
@@ -60,7 +61,14 @@ public class HeaderPositionCalculator {
     if (firstHeader && isStickyHeaderBeingPushedOffscreen(recyclerView, header)) {
       View viewAfterNextHeader = getFirstViewUnobscuredByHeader(recyclerView, header);
       int firstViewUnderHeaderPosition = recyclerView.getChildAdapterPosition(viewAfterNextHeader);
-      View secondHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
+
+      // Do not call getHeader again to get secondHeader; this will trigger an update to current
+      // sticky header. All references to the header point to the same View
+      View secondHeader = header;
+
+      // Set the current sticky header to the previous header since if sticky header is being
+      // pushed off then firstViewUnderHeaderPosition will give the 2nd header
+      mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition-1);
       translateHeaderWithNextHeader(recyclerView, mOrientationProvider.getOrientation(recyclerView), bounds,
           header, viewAfterNextHeader, secondHeader);
     }
@@ -95,7 +103,9 @@ public class HeaderPositionCalculator {
     }
 
     if (firstViewUnderHeaderPosition > 0 && hasNewHeader(firstViewUnderHeaderPosition)) {
-      View nextHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
+      // Avoid unnecessary getHeader calls; there is only one instance of a header View
+      View nextHeader = stickyHeader;
+
       Rect nextHeaderMargins = mDimensionCalculator.getMargins(nextHeader);
       Rect headerMargins = mDimensionCalculator.getMargins(stickyHeader);
 
@@ -145,7 +155,7 @@ public class HeaderPositionCalculator {
   private View getFirstViewUnobscuredByHeader(RecyclerView parent, View firstHeader) {
     for (int i = 0; i < parent.getChildCount(); i++) {
       View child = parent.getChildAt(i);
-      if (!itemIsObscuredByHeader(parent, child, firstHeader, mOrientationProvider.getOrientation(parent))) {
+      if (!isItemObscuredByHeader(parent, child, firstHeader, mOrientationProvider.getOrientation(parent))) {
         return child;
       }
     }
@@ -155,21 +165,18 @@ public class HeaderPositionCalculator {
   /**
    * Determines if an item is obscured by a header
    *
-   *
    * @param parent
    * @param item        to determine if obscured by header
    * @param header      that might be obscuring the item
    * @param orientation of the {@link RecyclerView}
    * @return true if the item view is obscured by the header view
    */
-  private boolean itemIsObscuredByHeader(RecyclerView parent, View item, View header, int orientation) {
+  private boolean isItemObscuredByHeader(RecyclerView parent, View item, View header, int orientation) {
     RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) item.getLayoutParams();
     Rect headerMargins = mDimensionCalculator.getMargins(header);
 
     int adapterPosition = parent.getChildAdapterPosition(item);
-    if (adapterPosition == RecyclerView.NO_POSITION || mHeaderProvider.getHeader(parent, adapterPosition) != header) {
-      // Resolves https://github.com/timehop/sticky-headers-recyclerview/issues/36
-      // Handles an edge case where a trailing header is smaller than the current sticky header.
+    if (adapterPosition == RecyclerView.NO_POSITION) {
       return false;
     }
 
@@ -186,6 +193,9 @@ public class HeaderPositionCalculator {
         return false;
       }
     }
+
+    // if Item is obscured, update sticky header
+    mHeaderProvider.getHeader(parent, adapterPosition);
 
     return true;
   }

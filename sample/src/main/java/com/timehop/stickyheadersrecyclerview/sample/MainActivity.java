@@ -100,14 +100,13 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//      Log.i(TAG, "onBindViewHolder: position: " + position);
       TextView textView = (TextView) holder.itemView;
       textView.setText(getItem(position));
     }
 
     @Override
     public long getHeaderId(int position) {
-//      Log.i(TAG, "getHeaderId: " + position);
+      // Don't count first row when drawing headers; it's set to "Animals below!"
       if (position == 0) {
         return -1;
       } else {
@@ -123,16 +122,15 @@ public class MainActivity extends Activity {
       };
     }
 
+    // TODO: consider changing onBindHeaderViewHolder interface to take headerId instead of position to match the consistency with onBindViewHolder
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-//      Log.i(TAG, "MA/onBindHeaderViewHolder headerId: " + getHeaderId(position));
-//      Log.i(TAG, "MA getItem: " + getItem(position));
       TextView textView = (TextView) holder.itemView;
-      textView.setText(String.valueOf(getItem(position).charAt(0)));
+      textView.setText(getItem(position));
 
       // Get the color mapped to the header Id
       long headerId = getHeaderId(position);
-      Integer backgroundColor = mBackgroundColorMap.get(getHeaderId(position));
+      Integer backgroundColor = mBackgroundColorMap.get(headerId);
 
       if (backgroundColor == null) {
         backgroundColor = getRandomColor();
@@ -140,7 +138,6 @@ public class MainActivity extends Activity {
       }
 
       textView.setBackgroundColor(backgroundColor);
-//      holder.itemView.setBackgroundColor(getRandomColor());
     }
 
     private int getRandomColor() {

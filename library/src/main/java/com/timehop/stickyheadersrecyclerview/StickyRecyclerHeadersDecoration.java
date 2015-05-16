@@ -4,8 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.TextView;
 
 import com.timehop.stickyheadersrecyclerview.caching.HeaderProvider;
 import com.timehop.stickyheadersrecyclerview.caching.HeaderViewCache;
@@ -15,7 +17,6 @@ import com.timehop.stickyheadersrecyclerview.util.LinearLayoutOrientationProvide
 import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
 
 public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
-
   private final StickyRecyclerHeadersAdapter mAdapter;
   private final SparseArray<Rect> mHeaderRects = new SparseArray<>();
   private final HeaderProvider mHeaderProvider;
@@ -97,10 +98,12 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       if (position == RecyclerView.NO_POSITION) {
           continue;
       }
-      if (hasStickyHeader(i, position) || mHeaderPositionCalculator.hasNewHeader(position)) {
+      boolean hasNewHeader = mHeaderPositionCalculator.hasNewHeader(position);
+      boolean hasStickyHeader = hasStickyHeader(i, position);
+      if (hasNewHeader || hasStickyHeader) {
         View header = mHeaderProvider.getHeader(parent, position);
         Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header,
-            itemView, hasStickyHeader(i, position));
+                itemView, hasStickyHeader);
         mRenderer.drawHeader(parent, canvas, header, headerOffset);
         mHeaderRects.put(position, headerOffset);
       }
