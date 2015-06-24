@@ -96,6 +96,8 @@ Known Issues
 
 Version History
 ---------------
+0.4.1 (6/24/2015) - Fix "dancing headers" by DarkJaguar91
+
 0.4.0 (4/16/2015) - Code reorganization by danoz73, fixes for different sized headers, performance improvements
 
 0.3.6 (1/30/2015) - Prevent header clicks from passing on the touch event
