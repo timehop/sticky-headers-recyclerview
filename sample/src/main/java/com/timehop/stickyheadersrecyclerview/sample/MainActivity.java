@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +29,30 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
 
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+    Button button = (Button) findViewById(R.id.button_update);
 
     // Set adapter populated with example dummy data
     final SampleArrayHeadersAdapter mAdapter = new SampleArrayHeadersAdapter();
     mAdapter.add("Animals below!");
     mAdapter.addAll(getDummyDataSet());
     recyclerView.setAdapter(mAdapter);
+
+    // Set button to update all views one after another (Test for the "Dance")
+    button.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        for (int i = 0; i < mAdapter.getItemCount(); i++) {
+          final int index = i;
+          handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+              mAdapter.notifyItemChanged(index);
+            }
+          }, 50);
+        }
+      }
+    });
 
     // Set layout manager
     int orientation = getLayoutManagerOrientation(getResources().getConfiguration().orientation);

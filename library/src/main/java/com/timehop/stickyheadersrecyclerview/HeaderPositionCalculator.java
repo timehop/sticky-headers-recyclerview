@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.timehop.stickyheadersrecyclerview.caching.HeaderProvider;
 import com.timehop.stickyheadersrecyclerview.calculation.DimensionCalculator;
@@ -25,6 +26,30 @@ public class HeaderPositionCalculator {
     mHeaderProvider = headerProvider;
     mOrientationProvider = orientationProvider;
     mDimensionCalculator = dimensionCalculator;
+  }
+
+  /**
+   * Determines if a view should have a sticky header.
+   * The view has a sticky header if:
+   * 1. It is the first element in the recycler view
+   * 2. It has a valid ID associated to its position
+   *
+   * @param itemView given by the RecyclerView
+   * @param orientation of the Recyclerview
+   * @param position of the list item in question
+   * @return True if the view should have a sticky header
+   */
+  public boolean hasStickyHeader(View itemView, int orientation, int position) {
+    int offset, margin;
+    if (orientation == LinearLayout.VERTICAL) {
+      offset = itemView.getTop();
+      margin = mDimensionCalculator.getMargins(itemView).top;
+    } else {
+      offset = itemView.getLeft();
+      margin = mDimensionCalculator.getMargins(itemView).left;
+    }
+
+    return offset <= margin && mAdapter.getHeaderId(position) >= 0;
   }
 
   /**
@@ -205,5 +230,4 @@ public class HeaderPositionCalculator {
       return 0;
     }
   }
-
 }

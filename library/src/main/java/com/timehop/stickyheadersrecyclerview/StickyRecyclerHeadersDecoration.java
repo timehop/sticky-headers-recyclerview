@@ -97,22 +97,16 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       if (position == RecyclerView.NO_POSITION) {
           continue;
       }
-      if (hasStickyHeader(i, position) || mHeaderPositionCalculator.hasNewHeader(position)) {
+
+      boolean hasStickyHeader = mHeaderPositionCalculator.hasStickyHeader(itemView, mOrientationProvider.getOrientation(parent), position);
+      if (hasStickyHeader || mHeaderPositionCalculator.hasNewHeader(position)) {
         View header = mHeaderProvider.getHeader(parent, position);
         Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header,
-            itemView, hasStickyHeader(i, position));
+            itemView, hasStickyHeader);
         mRenderer.drawHeader(parent, canvas, header, headerOffset);
         mHeaderRects.put(position, headerOffset);
       }
     }
-  }
-
-  private boolean hasStickyHeader(int listChildPosition, int indexInList) {
-    if (listChildPosition > 0 || mAdapter.getHeaderId(indexInList) < 0) {
-      return false;
-    }
-
-    return true;
   }
 
   /**
