@@ -127,7 +127,7 @@ public class HeaderPositionCalculator {
         return false;
     }
 
-    boolean isReverseLayout = mOrientationProvider.getReverseLayout(recyclerView);
+    boolean isReverseLayout = mOrientationProvider.isReverseLayout(recyclerView);
     if (firstViewUnderHeaderPosition > 0 && hasNewHeader(firstViewUnderHeaderPosition, isReverseLayout)) {
       View nextHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
       Rect nextHeaderMargins = mDimensionCalculator.getMargins(nextHeader);
@@ -177,10 +177,10 @@ public class HeaderPositionCalculator {
    * @return first item that is fully beneath a header
    */
   private View getFirstViewUnobscuredByHeader(RecyclerView parent, View firstHeader) {
-    boolean isReverseLayout = mOrientationProvider.getReverseLayout(parent);
+    boolean isReverseLayout = mOrientationProvider.isReverseLayout(parent);
     int step = isReverseLayout? -1 : 1;
     int from = isReverseLayout? parent.getChildCount()-1 : 0;
-    for (int i = from; i >= 0 && i<= parent.getChildCount()-1; i+=step) {
+    for (int i = from; i >= 0 && i <= parent.getChildCount() - 1; i += step) {
       View child = parent.getChildAt(i);
       if (!itemIsObscuredByHeader(parent, child, firstHeader, mOrientationProvider.getOrientation(parent))) {
         return child;
