@@ -60,7 +60,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     if (itemPosition == RecyclerView.NO_POSITION) {
         return;
     }
-    if (mHeaderPositionCalculator.hasNewHeader(itemPosition)) {
+    if (mHeaderPositionCalculator.hasNewHeader(itemPosition, mOrientationProvider.getReverseLayout(parent))) {
       View header = getHeaderView(parent, itemPosition);
       setItemOffsetsForHeader(outRect, header, mOrientationProvider.getOrientation(parent));
     }
@@ -99,10 +99,9 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       }
 
       boolean hasStickyHeader = mHeaderPositionCalculator.hasStickyHeader(itemView, mOrientationProvider.getOrientation(parent), position);
-      if (hasStickyHeader || mHeaderPositionCalculator.hasNewHeader(position)) {
+      if (hasStickyHeader || mHeaderPositionCalculator.hasNewHeader(position, mOrientationProvider.getReverseLayout(parent))) {
         View header = mHeaderProvider.getHeader(parent, position);
-        Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header,
-            itemView, hasStickyHeader);
+        Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header, itemView, hasStickyHeader);
         mRenderer.drawHeader(parent, canvas, header, headerOffset);
         mHeaderRects.put(position, headerOffset);
       }

@@ -57,10 +57,11 @@ public class HeaderPositionCalculator {
    * list that immediately precedes it. Items with no headers will always return false.
    *
    * @param position of the list item in questions
+   * @param isReverseLayout TRUE if layout manager has flag isReverseLayout
    * @return true if this item has a different header than the previous item in the list
    * @see {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
    */
-  public boolean hasNewHeader(int position) {
+  public boolean hasNewHeader(int position, boolean isReverseLayout) {
     if (indexOutOfBounds(position)) {
       return false;
     }
@@ -71,7 +72,14 @@ public class HeaderPositionCalculator {
       return false;
     }
 
-    return position == 0 || headerId != mAdapter.getHeaderId(position - 1);
+    long nextItemHeaderId = -1;
+    int nextItemPosition = position + (isReverseLayout? 1: -1);
+    if (!indexOutOfBounds(nextItemPosition)){
+      nextItemHeaderId = mAdapter.getHeaderId(nextItemPosition);
+    }
+    int firstItemPosition = isReverseLayout? mAdapter.getItemCount()-1 : 0;
+
+    return position == firstItemPosition || headerId != nextItemHeaderId;
   }
 
   private boolean indexOutOfBounds(int position) {
@@ -119,7 +127,8 @@ public class HeaderPositionCalculator {
         return false;
     }
 
-    if (firstViewUnderHeaderPosition > 0 && hasNewHeader(firstViewUnderHeaderPosition)) {
+    boolean isReverseLayout = mOrientationProvider.getReverseLayout(recyclerView);
+    if (firstViewUnderHeaderPosition > 0 && hasNewHeader(firstViewUnderHeaderPosition, isReverseLayout)) {
       View nextHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
       Rect nextHeaderMargins = mDimensionCalculator.getMargins(nextHeader);
       Rect headerMargins = mDimensionCalculator.getMargins(stickyHeader);
@@ -168,7 +177,10 @@ public class HeaderPositionCalculator {
    * @return first item that is fully beneath a header
    */
   private View getFirstViewUnobscuredByHeader(RecyclerView parent, View firstHeader) {
-    for (int i = 0; i < parent.getChildCount(); i++) {
+    boolean isReverseLayout = mOrientationProvider.getReverseLayout(parent);
+    int step = isReverseLayout? -1 : 1;
+    int from = isReverseLayout? parent.getChildCount()-1 : 0;
+    for (int i = from; i >= 0 && i<= parent.getChildCount()-1; i+=step) {
       View child = parent.getChildAt(i);
       if (!itemIsObscuredByHeader(parent, child, firstHeader, mOrientationProvider.getOrientation(parent))) {
         return child;

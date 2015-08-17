@@ -3,5 +3,6 @@
 
     <string name="app_name">StickyHeadersRecyclerView</string>
     <string name="button_update">Start Update</string>
+    <string name="button_reverse">Is reverse</string>
 
 </resources>
