@@ -8,12 +8,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -28,8 +30,9 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+    final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
     Button button = (Button) findViewById(R.id.button_update);
+    final ToggleButton isReverseButton = (ToggleButton) findViewById(R.id.button_is_reverse);
 
     // Set adapter populated with example dummy data
     final SampleArrayHeadersAdapter mAdapter = new SampleArrayHeadersAdapter();
@@ -56,7 +59,7 @@ public class MainActivity extends Activity {
 
     // Set layout manager
     int orientation = getLayoutManagerOrientation(getResources().getConfiguration().orientation);
-    final LinearLayoutManager layoutManager = new LinearLayoutManager(this, orientation, false);
+    final LinearLayoutManager layoutManager = new LinearLayoutManager(this, orientation, isReverseButton.isChecked());
     recyclerView.setLayoutManager(layoutManager);
 
     // Add the sticky headers decoration
@@ -74,7 +77,7 @@ public class MainActivity extends Activity {
           @Override
           public void onHeaderClick(View header, int position, long headerId) {
             Toast.makeText(MainActivity.this, "Header position: " + position + ", id: " + headerId,
-                Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
           }
         });
     recyclerView.addOnItemTouchListener(touchListener);
@@ -85,8 +88,19 @@ public class MainActivity extends Activity {
       }
     }));
     mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-      @Override public void onChanged() {
+      @Override
+      public void onChanged() {
         headersDecor.invalidateHeaders();
+      }
+    });
+
+    isReverseButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        boolean isChecked = isReverseButton.isChecked();
+        isReverseButton.setChecked(isChecked);
+        layoutManager.setReverseLayout(isChecked);
+        mAdapter.notifyDataSetChanged();
       }
     });
   }

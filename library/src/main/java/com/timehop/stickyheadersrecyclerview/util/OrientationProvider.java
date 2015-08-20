@@ -9,4 +9,5 @@ public interface OrientationProvider {
 
   public int getOrientation(RecyclerView recyclerView);
 
+  public boolean isReverseLayout(RecyclerView recyclerView);
 }
