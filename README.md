@@ -16,7 +16,7 @@ Here is a quick video of it in action (click to see the full video):
 Download
 --------
 
-    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.1@aar'
+    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.2@aar'
 
 Usage
 -----
@@ -94,8 +94,12 @@ Known Issues
 
 * I haven't tested this with ItemAnimators yet.
 
+* The header views are drawn to a canvas, and are not actually a part of the view hierarchy. As such, they can't have touch states, and you may run into issues if you try to load images into them asynchronously.
+
 Version History
 ---------------
+0.4.2 (8/21/2015) - Add support for reverse `ReverseLayout` in `LinearLayoutManager` by [AntonPukhonin](https://github.com/AntonPukhonin)
+
 0.4.1 (6/24/2015) - Fix "dancing headers" by DarkJaguar91
 
 0.4.0 (4/16/2015) - Code reorganization by danoz73, fixes for different sized headers, performance improvements
