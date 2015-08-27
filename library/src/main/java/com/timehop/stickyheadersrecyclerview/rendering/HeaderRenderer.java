@@ -39,9 +39,11 @@ public class HeaderRenderer {
   public void drawHeader(RecyclerView recyclerView, Canvas canvas, View header, Rect offset) {
     canvas.save();
 
-    if (recyclerView.getLayoutManager().getClipToPadding()) {
+    // For sdk < 14 need to clip regardless because of full screen
+    // header strangeness
+    if (Build.VERSION.SDK_INT < 14 || recyclerView.getLayoutManager().getClipToPadding()) {
       // Clip drawing of headers to the padding of the RecyclerView. Avoids drawing in the padding
-      Rect clipRect = getClipRectForHeader(recyclerView, header);
+      Rect clipRect = getClipRectForHeader(recyclerView, header, offset);
       canvas.clipRect(clipRect);
     }
 
@@ -65,76 +67,95 @@ public class HeaderRenderer {
    */
   private Rect getClipRectForHeader(RecyclerView recyclerView, View header, Rect offset) {
     Rect headerMargins = mDimensionCalculator.getMargins(header);
-    if (mOrientationProvider.getOrientation(recyclerView) == LinearLayout.VERTICAL) {
-
-      int offsetBottom = offset.top + header.getHeight();
-      int recyclerBottom = recyclerView.getHeight() - recyclerView.getPaddingBottom();
-
-      // If offsets are above or below no need for visibility
-      if (offset.top <= recyclerView.getPaddingTop() && offsetBottom <= recyclerView.getPaddingTop()
-              || offsetBottom >= recyclerBottom && offset.top >= recyclerBottom) {
-          return new Rect(0, 0, 0, 0);
-
-      // If topOffset within top padding and bottomOffset NOT within top padding
-      } else if (offset.top < recyclerView.getPaddingTop() && offsetBottom > recyclerView.getPaddingTop()) {
-              return new Rect(
-                      recyclerView.getPaddingLeft(),
-                      recyclerView.getPaddingTop(),
-                      recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
-                      offsetBottom);
-
-      // If offsetBottom within bottom padding and offsetTop NOT within bottom padding
-      } else if (offsetBottom > recyclerBottom && offset.top < recyclerBottom) {
-          return new Rect(
-                  recyclerView.getPaddingLeft(),
-                  offset.top,
-                  recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
-                  recyclerBottom);
-
-      // Else use offset for all clips
+    
+    // If sdk > 14 clip to recyclerview (What it was doing previously)
+    if (Build.VERSION.SDK_INT > 14) {
+      if (mOrientationProvider.getOrientation(recyclerView) == LinearLayout.VERTICAL) {
+        return new Rect(
+              recyclerView.getPaddingLeft(),
+              recyclerView.getPaddingTop(),
+              recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
+              recyclerView.getHeight() - recyclerView.getPaddingBottom());
       } else {
-          return new Rect(
-                  recyclerView.getPaddingLeft(),
-                  offset.top,
-                  recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
-                  offset.top + header.getHeight());
+        return new Rect(
+              recyclerView.getPaddingLeft(),
+              recyclerView.getPaddingTop(),
+              recyclerView.getWidth() - recyclerView.getPaddingRight(),
+              recyclerView.getHeight() - recyclerView.getPaddingBottom() - headerMargins.bottom);
       }
+    // If sdk < 14, do clipping which clips based on exact header size
+    //and offset, instead of full size of recyclerview
     } else {
-
-      int offsetRight = offset.left + header.getWidth();
-      int recyclerRight = recyclerView.getWidth() - recyclerView.getPaddingRight();
-      
-       // If offsets are both to right or left, no need for visibility
-      if (offset.left <= recyclerView.getPaddingLeft() && offsetRight <= recyclerView.getPaddingLeft()
-              || offsetRight >= recyclerRight && offset.left >= recyclerRight) {
-          return new Rect(0, 0, 0, 0);
-
-      // If offsetLeft within paddingLeft and offsetRight NOT within paddingLeft
-      } else if (offset.left < recyclerView.getPaddingLeft() && offsetRight > recyclerView.getPaddingLeft()) {
-          return new Rect(
-                  recyclerView.getPaddingLeft(),
-                  recyclerView.getPaddingTop(),
-                  offsetRight,
-                  recyclerView.getHeight() - recyclerView.getPaddingBottom() - headerMargins.bottom);
-
-      // If offsetRight within paddingRight and offsetLeft NOT within paddingRight
-      } else if (offsetRight > recyclerRight && offset.left < recyclerRight) {
-          return new Rect(
-                  offset.left,
-                  recyclerView.getPaddingTop(),
-                  recyclerView.getWidth() - recyclerView.getPaddingRight(),
-                  recyclerView.getHeight() - recyclerView.getPaddingBottom()- headerMargins.bottom);
-
-      // Else use offset for all clips
+      if (mOrientationProvider.getOrientation(recyclerView) == LinearLayout.VERTICAL) {
+  
+        int offsetBottom = offset.top + header.getHeight();
+        int recyclerBottom = recyclerView.getHeight() - recyclerView.getPaddingBottom();
+  
+        // If offsets are above or below no need for visibility
+        if (offset.top <= recyclerView.getPaddingTop() && offsetBottom <= recyclerView.getPaddingTop()
+                || offsetBottom >= recyclerBottom && offset.top >= recyclerBottom) {
+            return new Rect(0, 0, 0, 0);
+  
+        // If topOffset within top padding and bottomOffset NOT within top padding
+        } else if (offset.top < recyclerView.getPaddingTop() && offsetBottom > recyclerView.getPaddingTop()) {
+                return new Rect(
+                        recyclerView.getPaddingLeft(),
+                        recyclerView.getPaddingTop(),
+                        recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
+                        offsetBottom);
+  
+        // If offsetBottom within bottom padding and offsetTop NOT within bottom padding
+        } else if (offsetBottom > recyclerBottom && offset.top < recyclerBottom) {
+            return new Rect(
+                    recyclerView.getPaddingLeft(),
+                    offset.top,
+                    recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
+                    recyclerBottom);
+  
+        // Else use offset for all clips
+        } else {
+            return new Rect(
+                    recyclerView.getPaddingLeft(),
+                    offset.top,
+                    recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
+                    offset.top + header.getHeight());
+        }
+        
       } else {
-          return new Rect(
-                  offset.left,
-                  recyclerView.getPaddingTop(),
-                  offsetRight,
-                  recyclerView.getHeight() - recyclerView.getPaddingBottom() - headerMargins.bottom);
+        
+        int offsetRight = offset.left + header.getWidth();
+        int recyclerRight = recyclerView.getWidth() - recyclerView.getPaddingRight();
+        
+         // If offsets are both to right or left, no need for visibility
+        if (offset.left <= recyclerView.getPaddingLeft() && offsetRight <= recyclerView.getPaddingLeft()
+                || offsetRight >= recyclerRight && offset.left >= recyclerRight) {
+            return new Rect(0, 0, 0, 0);
+  
+        // If offsetLeft within paddingLeft and offsetRight NOT within paddingLeft
+        } else if (offset.left < recyclerView.getPaddingLeft() && offsetRight > recyclerView.getPaddingLeft()) {
+            return new Rect(
+                    recyclerView.getPaddingLeft(),
+                    recyclerView.getPaddingTop(),
+                    offsetRight,
+                    recyclerView.getHeight() - recyclerView.getPaddingBottom() - headerMargins.bottom);
+  
+        // If offsetRight within paddingRight and offsetLeft NOT within paddingRight
+        } else if (offsetRight > recyclerRight && offset.left < recyclerRight) {
+            return new Rect(
+                    offset.left,
+                    recyclerView.getPaddingTop(),
+                    recyclerView.getWidth() - recyclerView.getPaddingRight(),
+                    recyclerView.getHeight() - recyclerView.getPaddingBottom()- headerMargins.bottom);
+  
+        // Else use offset for all clips
+        } else {
+            return new Rect(
+                    offset.left,
+                    recyclerView.getPaddingTop(),
+                    offsetRight,
+                    recyclerView.getHeight() - recyclerView.getPaddingBottom() - headerMargins.bottom);
+        }
       }
-
     }
   }
-
 }
