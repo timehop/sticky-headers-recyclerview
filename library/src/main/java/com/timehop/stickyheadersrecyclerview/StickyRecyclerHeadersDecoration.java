@@ -58,7 +58,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     super.getItemOffsets(outRect, view, parent, state);
     int itemPosition = parent.getChildAdapterPosition(view);
     if (itemPosition == RecyclerView.NO_POSITION) {
-        return;
+      return;
     }
     if (mHeaderPositionCalculator.hasNewHeader(itemPosition, mOrientationProvider.isReverseLayout(parent))) {
       View header = getHeaderView(parent, itemPosition);
@@ -95,7 +95,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       View itemView = parent.getChildAt(i);
       int position = parent.getChildAdapterPosition(itemView);
       if (position == RecyclerView.NO_POSITION) {
-          continue;
+        continue;
       }
 
       boolean hasStickyHeader = mHeaderPositionCalculator.hasStickyHeader(itemView, mOrientationProvider.getOrientation(parent), position);
@@ -143,5 +143,13 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
    */
   public void invalidateHeaders() {
     mHeaderProvider.invalidate();
+  }
+
+  /**
+   * Determines the behavior of the headers. They're sticky by default.
+   * @param sticky set to true if the headers should be sticky, false otherwise.
+   */
+  public void setHeadersSticky(boolean sticky) {
+    mHeaderPositionCalculator.setSticky(sticky);
   }
 }

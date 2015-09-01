@@ -19,6 +19,7 @@ public class HeaderPositionCalculator {
   private final OrientationProvider mOrientationProvider;
   private final HeaderProvider mHeaderProvider;
   private final DimensionCalculator mDimensionCalculator;
+  private boolean mSticky = true; // Headers are sticky by default.
 
   public HeaderPositionCalculator(StickyRecyclerHeadersAdapter adapter, HeaderProvider headerProvider,
       OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator) {
@@ -50,6 +51,10 @@ public class HeaderPositionCalculator {
     }
 
     return offset <= margin && mAdapter.getHeaderId(position) >= 0;
+  }
+
+  public void setSticky(boolean sticky) {
+    mSticky = sticky;
   }
 
   /**
@@ -108,12 +113,12 @@ public class HeaderPositionCalculator {
       translationX = firstView.getLeft() + headerMargins.left;
       translationY = Math.max(
           firstView.getTop() - header.getHeight() - headerMargins.bottom,
-          getListTop(recyclerView) + headerMargins.top);
+          mSticky ? getListTop(recyclerView) + headerMargins.top : Integer.MIN_VALUE);
     } else {
       translationY = firstView.getTop() + headerMargins.top;
       translationX = Math.max(
           firstView.getLeft() - header.getWidth() - headerMargins.right,
-          getListLeft(recyclerView) + headerMargins.left);
+          mSticky ? getListLeft(recyclerView) + headerMargins.left : Integer.MIN_VALUE);
     }
 
     return new Rect(translationX, translationY, translationX + header.getWidth(),
@@ -124,7 +129,7 @@ public class HeaderPositionCalculator {
     View viewAfterHeader = getFirstViewUnobscuredByHeader(recyclerView, stickyHeader);
     int firstViewUnderHeaderPosition = recyclerView.getChildAdapterPosition(viewAfterHeader);
     if (firstViewUnderHeaderPosition == RecyclerView.NO_POSITION) {
-        return false;
+      return false;
     }
 
     boolean isReverseLayout = mOrientationProvider.isReverseLayout(recyclerView);
@@ -191,7 +196,6 @@ public class HeaderPositionCalculator {
 
   /**
    * Determines if an item is obscured by a header
-   *
    *
    * @param parent
    * @param item        to determine if obscured by header
