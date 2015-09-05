@@ -52,7 +52,7 @@ public abstract class RecyclerArrayAdapter<M, VH extends RecyclerView.ViewHolder
 
   @Override
   public long getItemId(int position) {
-    return position;
+    return getItem(position).hashCode();
   }
 
   @Override

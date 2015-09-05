@@ -19,6 +19,14 @@
             android:layout_weight="1"
             android:text="@string/button_update"/>
 
+        <Button
+            android:id="@+id/button_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:text="@string/button_add"/>
+
         <ToggleButton
             android:id="@+id/button_is_reverse"
             android:layout_width="0dp"
