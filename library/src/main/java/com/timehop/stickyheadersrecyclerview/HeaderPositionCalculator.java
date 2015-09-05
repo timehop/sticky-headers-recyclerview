@@ -105,14 +105,14 @@ public class HeaderPositionCalculator {
     int translationX, translationY;
     Rect headerMargins = mDimensionCalculator.getMargins(header);
     if (orientation == LinearLayoutManager.VERTICAL) {
-      translationX = firstView.getLeft() + headerMargins.left;
+      translationX = (int) firstView.getX() + headerMargins.left;
       translationY = Math.max(
-          firstView.getTop() - header.getHeight() - headerMargins.bottom,
+          (int) firstView.getY() - header.getHeight() - headerMargins.bottom,
           getListTop(recyclerView) + headerMargins.top);
     } else {
-      translationY = firstView.getTop() + headerMargins.top;
+      translationY = (int) firstView.getY() + headerMargins.top;
       translationX = Math.max(
-          firstView.getLeft() - header.getWidth() - headerMargins.right,
+          (int) firstView.getX() - header.getWidth() - headerMargins.right,
           getListLeft(recyclerView) + headerMargins.left);
     }
 

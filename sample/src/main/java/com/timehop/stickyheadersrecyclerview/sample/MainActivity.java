@@ -25,6 +25,8 @@ import java.security.SecureRandom;
 
 public class MainActivity extends Activity {
 
+  public static final String ANIMALS_BELOW = "Animals below!";
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public class MainActivity extends Activity {
 
     final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
     Button button = (Button) findViewById(R.id.button_update);
+    Button buttonAdd = (Button) findViewById(R.id.button_add);
     final ToggleButton isReverseButton = (ToggleButton) findViewById(R.id.button_is_reverse);
 
     // Set adapter populated with example dummy data
@@ -56,6 +59,18 @@ public class MainActivity extends Activity {
         }
       }
     });
+
+    // Add/remove item to the top of list (Test animations)
+      buttonAdd.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              if (ANIMALS_BELOW.equals(mAdapter.getItem(0))) {
+                  mAdapter.remove(ANIMALS_BELOW);
+              } else {
+                  mAdapter.add(0, ANIMALS_BELOW);
+              }
+          }
+      });
 
     // Set layout manager
     int orientation = getLayoutManagerOrientation(getResources().getConfiguration().orientation);
@@ -122,7 +137,7 @@ public class MainActivity extends Activity {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view = LayoutInflater.from(parent.getContext())
-          .inflate(R.layout.view_item, parent, false);
+              .inflate(R.layout.view_item, parent, false);
       return new RecyclerView.ViewHolder(view) {
       };
     }
@@ -145,7 +160,7 @@ public class MainActivity extends Activity {
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
       View view = LayoutInflater.from(parent.getContext())
-          .inflate(R.layout.view_header, parent, false);
+              .inflate(R.layout.view_header, parent, false);
       return new RecyclerView.ViewHolder(view) {
       };
     }

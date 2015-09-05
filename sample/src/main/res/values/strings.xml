@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">StickyHeadersRecyclerView</string>
-    <string name="button_update">Start Update</string>
+    <string name="button_update">Update</string>
     <string name="button_reverse">Is reverse</string>
+    <string name="button_add">Add/Remove</string>
 
 </resources>
