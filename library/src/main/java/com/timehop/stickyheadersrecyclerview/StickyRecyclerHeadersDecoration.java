@@ -23,6 +23,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   private final HeaderPositionCalculator mHeaderPositionCalculator;
   private final HeaderRenderer mRenderer;
   private final DimensionCalculator mDimensionCalculator;
+  private boolean mAreHeadersSticky = true;
 
   // TODO: Consider passing in orientation to simplify orientation accounting within calculation
   public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter) {
@@ -101,11 +102,19 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       boolean hasStickyHeader = mHeaderPositionCalculator.hasStickyHeader(itemView, mOrientationProvider.getOrientation(parent), position);
       if (hasStickyHeader || mHeaderPositionCalculator.hasNewHeader(position, mOrientationProvider.isReverseLayout(parent))) {
         View header = mHeaderProvider.getHeader(parent, position);
-        Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header, itemView, hasStickyHeader);
+        Rect headerOffset = mHeaderPositionCalculator.getHeaderBounds(parent, header, itemView, hasStickyHeader, mAreHeadersSticky);
         mRenderer.drawHeader(parent, canvas, header, headerOffset);
         mHeaderRects.put(position, headerOffset);
       }
     }
+  }
+
+  public void setAreHeadersSticky(boolean areHeadersSticky) {
+    this.mAreHeadersSticky = areHeadersSticky;
+  }
+
+  public boolean areHeadersSticky() {
+    return this.mAreHeadersSticky;
   }
 
   /**
