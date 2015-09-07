@@ -86,11 +86,12 @@ public class HeaderPositionCalculator {
     return position < 0 || position >= mAdapter.getItemCount();
   }
 
-  public Rect getHeaderBounds(RecyclerView recyclerView, View header, View firstView, boolean firstHeader) {
+  public Rect getHeaderBounds(RecyclerView recyclerView, View header, View firstView, boolean firstHeader, boolean areHeadersSticky) {
     int orientation = mOrientationProvider.getOrientation(recyclerView);
-    Rect bounds = getDefaultHeaderOffset(recyclerView, header, firstView, orientation);
+    Rect bounds = getDefaultHeaderOffset(recyclerView, header, firstView, orientation,
+            areHeadersSticky);
 
-    if (firstHeader && isStickyHeaderBeingPushedOffscreen(recyclerView, header)) {
+    if (firstHeader && areHeadersSticky && isStickyHeaderBeingPushedOffscreen(recyclerView, header)) {
       View viewAfterNextHeader = getFirstViewUnobscuredByHeader(recyclerView, header);
       int firstViewUnderHeaderPosition = recyclerView.getChildAdapterPosition(viewAfterNextHeader);
       View secondHeader = mHeaderProvider.getHeader(recyclerView, firstViewUnderHeaderPosition);
@@ -101,19 +102,27 @@ public class HeaderPositionCalculator {
     return bounds;
   }
 
-  private Rect getDefaultHeaderOffset(RecyclerView recyclerView, View header, View firstView, int orientation) {
+  private Rect getDefaultHeaderOffset(RecyclerView recyclerView, View header, View firstView, int orientation, boolean areHeadersSticky) {
     int translationX, translationY;
     Rect headerMargins = mDimensionCalculator.getMargins(header);
     if (orientation == LinearLayoutManager.VERTICAL) {
       translationX = firstView.getLeft() + headerMargins.left;
-      translationY = Math.max(
-          firstView.getTop() - header.getHeight() - headerMargins.bottom,
-          getListTop(recyclerView) + headerMargins.top);
+      if (areHeadersSticky) {
+        translationY = Math.max(
+                firstView.getTop() - header.getHeight() - headerMargins.bottom,
+                getListTop(recyclerView) + headerMargins.top);
+      } else {
+        translationY = firstView.getTop() - header.getHeight() - headerMargins.bottom;
+      }
     } else {
       translationY = firstView.getTop() + headerMargins.top;
-      translationX = Math.max(
-          firstView.getLeft() - header.getWidth() - headerMargins.right,
-          getListLeft(recyclerView) + headerMargins.left);
+      if (areHeadersSticky) {
+        translationX = Math.max(
+                firstView.getLeft() - header.getWidth() - headerMargins.right,
+                getListLeft(recyclerView) + headerMargins.left);
+      } else {
+        translationX = firstView.getLeft() - header.getWidth() - headerMargins.right;
+      }
     }
 
     return new Rect(translationX, translationY, translationX + header.getWidth(),
