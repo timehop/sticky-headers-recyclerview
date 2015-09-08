@@ -17,6 +17,12 @@ public class HeaderRenderer {
   private final DimensionCalculator mDimensionCalculator;
   private final OrientationProvider mOrientationProvider;
 
+  /**
+   * The following field is used as a buffer for internal calculations. Its sole purpose is to avoid
+   * allocating new Rect every time we need one.
+   */
+  private final Rect mTempRect = new Rect();
+
   public HeaderRenderer(OrientationProvider orientationProvider) {
     this(orientationProvider, new DimensionCalculator());
   }
@@ -41,8 +47,8 @@ public class HeaderRenderer {
 
     if (recyclerView.getLayoutManager().getClipToPadding()) {
       // Clip drawing of headers to the padding of the RecyclerView. Avoids drawing in the padding
-      Rect clipRect = getClipRectForHeader(recyclerView, header);
-      canvas.clipRect(clipRect);
+      initClipRectForHeader(mTempRect, recyclerView, header);
+      canvas.clipRect(mTempRect);
     }
 
     canvas.translate(offset.left, offset.top);
@@ -52,30 +58,30 @@ public class HeaderRenderer {
   }
 
   /**
-   * Gets a clipping rect for the header based on the margins of the header and the padding of the
+   * Initializes a clipping rect for the header based on the margins of the header and the padding of the
    * recycler.
    * FIXME: Currently right margin in VERTICAL orientation and bottom margin in HORIZONTAL
    * orientation are clipped so they look accurate, but the headers are not being drawn at the
    * correctly smaller width and height respectively.
    *
+   * @param clipRect {@link Rect} for clipping a provided header to the padding of a recycler view
    * @param recyclerView for which to provide a header
    * @param header       for clipping
-   * @return a {@link Rect} for clipping a provided header to the padding of a recycler view
    */
-  private Rect getClipRectForHeader(RecyclerView recyclerView, View header) {
-    Rect headerMargins = mDimensionCalculator.getMargins(header);
+  private void initClipRectForHeader(Rect clipRect, RecyclerView recyclerView, View header) {
+    mDimensionCalculator.initMargins(clipRect, header);
     if (mOrientationProvider.getOrientation(recyclerView) == LinearLayout.VERTICAL) {
-      return new Rect(
+      clipRect.set(
           recyclerView.getPaddingLeft(),
           recyclerView.getPaddingTop(),
-          recyclerView.getWidth() - recyclerView.getPaddingRight() - headerMargins.right,
+          recyclerView.getWidth() - recyclerView.getPaddingRight() - clipRect.right,
           recyclerView.getHeight() - recyclerView.getPaddingBottom());
     } else {
-      return new Rect(
+        clipRect.set(
           recyclerView.getPaddingLeft(),
           recyclerView.getPaddingTop(),
           recyclerView.getWidth() - recyclerView.getPaddingRight(),
-          recyclerView.getHeight() - recyclerView.getPaddingBottom() - headerMargins.bottom);
+          recyclerView.getHeight() - recyclerView.getPaddingBottom() - clipRect.bottom);
     }
   }
 
