@@ -17,7 +17,7 @@ public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTo
   }
 
   public StickyRecyclerHeadersTouchListener(final RecyclerView recyclerView,
-      final StickyRecyclerHeadersDecoration decor) {
+                                            final StickyRecyclerHeadersDecoration decor) {
     mTapDetector = new GestureDetector(recyclerView.getContext(), new SingleTapDetector());
     mRecyclerView = recyclerView;
     mDecor = decor;
@@ -40,7 +40,18 @@ public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTo
 
   @Override
   public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
-    return mOnHeaderClickListener != null && mTapDetector.onTouchEvent(e);
+    if (this.mOnHeaderClickListener != null) {
+      boolean tapDetectorResponse = this.mTapDetector.onTouchEvent(e);
+      if (tapDetectorResponse) {
+        // Don't return false if a single tap is detected
+        return true;
+      }
+      if (e.getAction() == MotionEvent.ACTION_DOWN) {
+        int position = mDecor.findHeaderPositionUnder((int)e.getX(), (int)e.getY());
+        return position != -1;
+      }
+    }
+    return false;
   }
 
   @Override
