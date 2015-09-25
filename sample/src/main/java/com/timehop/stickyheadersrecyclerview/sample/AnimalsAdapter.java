@@ -7,32 +7,35 @@ import java.util.Arrays;
 import java.util.Collection;
 
 
-public abstract class RecyclerArrayAdapter<M, VH extends RecyclerView.ViewHolder>
+/**
+ * Adapter holding a list of animal names of type String. Note that each item must be unique.
+ */
+public abstract class AnimalsAdapter<VH extends RecyclerView.ViewHolder>
     extends RecyclerView.Adapter<VH> {
-  private ArrayList<M> items = new ArrayList<M>();
+  private ArrayList<String> items = new ArrayList<String>();
 
-  public RecyclerArrayAdapter() {
+  public AnimalsAdapter() {
     setHasStableIds(true);
   }
 
-  public void add(M object) {
+  public void add(String object) {
     items.add(object);
     notifyDataSetChanged();
   }
 
-  public void add(int index, M object) {
+  public void add(int index, String object) {
     items.add(index, object);
     notifyDataSetChanged();
   }
 
-  public void addAll(Collection<? extends M> collection) {
+  public void addAll(Collection<? extends String> collection) {
     if (collection != null) {
       items.addAll(collection);
       notifyDataSetChanged();
     }
   }
 
-  public void addAll(M... items) {
+  public void addAll(String... items) {
     addAll(Arrays.asList(items));
   }
 
@@ -41,18 +44,18 @@ public abstract class RecyclerArrayAdapter<M, VH extends RecyclerView.ViewHolder
     notifyDataSetChanged();
   }
 
-  public void remove(M object) {
+  public void remove(String object) {
     items.remove(object);
     notifyDataSetChanged();
   }
 
-  public M getItem(int position) {
+  public String getItem(int position) {
     return items.get(position);
   }
 
   @Override
   public long getItemId(int position) {
-    return position;
+    return getItem(position).hashCode();
   }
 
   @Override
