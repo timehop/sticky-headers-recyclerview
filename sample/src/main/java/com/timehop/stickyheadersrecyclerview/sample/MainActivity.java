@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,22 +34,22 @@ public class MainActivity extends Activity {
     final ToggleButton isReverseButton = (ToggleButton) findViewById(R.id.button_is_reverse);
 
     // Set adapter populated with example dummy data
-    final SampleArrayHeadersAdapter mAdapter = new SampleArrayHeadersAdapter();
-    mAdapter.add("Animals below!");
-    mAdapter.addAll(getDummyDataSet());
-    recyclerView.setAdapter(mAdapter);
+    final AnimalsHeadersAdapter adapter = new AnimalsHeadersAdapter();
+    adapter.add("Animals below!");
+    adapter.addAll(getDummyDataSet());
+    recyclerView.setAdapter(adapter);
 
     // Set button to update all views one after another (Test for the "Dance")
     button.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Handler handler = new Handler(Looper.getMainLooper());
-        for (int i = 0; i < mAdapter.getItemCount(); i++) {
+        for (int i = 0; i < adapter.getItemCount(); i++) {
           final int index = i;
           handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-              mAdapter.notifyItemChanged(index);
+              adapter.notifyItemChanged(index);
             }
           }, 50);
         }
@@ -63,7 +62,7 @@ public class MainActivity extends Activity {
     recyclerView.setLayoutManager(layoutManager);
 
     // Add the sticky headers decoration
-    final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
+    final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(adapter);
     recyclerView.addItemDecoration(headersDecor);
 
     // Add decoration for dividers between list items
@@ -84,10 +83,10 @@ public class MainActivity extends Activity {
     recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
       @Override
       public void onItemClick(View view, int position) {
-        mAdapter.remove(mAdapter.getItem(position));
+        adapter.remove(adapter.getItem(position));
       }
     }));
-    mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+    adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
       @Override
       public void onChanged() {
         headersDecor.invalidateHeaders();
@@ -100,7 +99,7 @@ public class MainActivity extends Activity {
         boolean isChecked = isReverseButton.isChecked();
         isReverseButton.setChecked(isChecked);
         layoutManager.setReverseLayout(isChecked);
-        mAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
       }
     });
   }
@@ -117,7 +116,7 @@ public class MainActivity extends Activity {
     }
   }
 
-  private class SampleArrayHeadersAdapter extends RecyclerArrayAdapter<String, RecyclerView.ViewHolder>
+  private class AnimalsHeadersAdapter extends AnimalsAdapter<RecyclerView.ViewHolder>
       implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
