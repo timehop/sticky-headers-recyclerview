@@ -36,4 +36,6 @@ public interface StickyRecyclerHeadersAdapter<VH extends RecyclerView.ViewHolder
    * @return the number of views in the adapter
    */
   int getItemCount();
+
+  boolean isPositionVisible(final int position);
 }

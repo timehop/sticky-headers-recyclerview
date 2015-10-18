@@ -130,7 +130,10 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     for (int i = 0; i < mHeaderRects.size(); i++) {
       Rect rect = mHeaderRects.get(mHeaderRects.keyAt(i));
       if (rect.contains(x, y)) {
-        return mHeaderRects.keyAt(i);
+        int position = mHeaderRects.keyAt(i);
+        if (mAdapter.isPositionVisible(position)) {
+          return position;
+        }
       }
     }
     return -1;
