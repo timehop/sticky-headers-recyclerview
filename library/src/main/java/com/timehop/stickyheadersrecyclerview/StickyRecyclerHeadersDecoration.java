@@ -154,5 +154,6 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
    */
   public void invalidateHeaders() {
     mHeaderProvider.invalidate();
+    mHeaderRects.clear();
   }
 }
