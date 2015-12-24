@@ -1,23 +1,23 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:paddingTop="18dp">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/buttons_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="18dp"
+        android:paddingTop="18dp">
 
         <Button
             android:id="@+id/button_update"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_update"/>
+            android:text="@string/button_update" />
 
         <ToggleButton
             android:id="@+id/button_is_reverse"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textOff="@string/button_reverse"
-            android:textOn="@string/button_reverse"/>
+            android:textOn="@string/button_reverse" />
 
     </LinearLayout>
 
@@ -34,11 +34,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/buttons_container"
-        android:layout_margin="18dp"
-        android:padding="16dp"
         android:background="#ffbef0ff"
-        android:saveEnabled="false"
         android:clipToPadding="true"
-        />
+        android:padding="16dp"
+        android:saveEnabled="false" />
 
 </RelativeLayout>

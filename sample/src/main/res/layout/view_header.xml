@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:background="#001F3F"
-    android:textSize="32sp"
+    android:textSize="28sp"
     android:textStyle="bold"
     android:textColor="@android:color/white"
     tools:text="Animals starting with A"

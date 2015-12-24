@@ -1,11 +1,11 @@
 package com.timehop.stickyheadersrecyclerview.sample;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +22,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
 import java.security.SecureRandom;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
           @Override
           public void onHeaderClick(View header, int position, long headerId) {
             Toast.makeText(MainActivity.this, "Header position: " + position + ", id: " + headerId,
-                    Toast.LENGTH_SHORT).show();
+                Toast.LENGTH_SHORT).show();
           }
         });
     recyclerView.addOnItemTouchListener(touchListener);
