@@ -70,15 +70,15 @@ public class MainActivity extends AppCompatActivity {
 
     // Add touch listeners
     StickyRecyclerHeadersTouchListener touchListener =
-            new StickyRecyclerHeadersTouchListener(recyclerView, headersDecor);
+        new StickyRecyclerHeadersTouchListener(recyclerView, headersDecor);
     touchListener.setOnHeaderClickListener(
-            new StickyRecyclerHeadersTouchListener.OnHeaderClickListener() {
-              @Override
-              public void onHeaderClick(View header, int position, long headerId) {
-                Toast.makeText(MainActivity.this, "Header position: " + position + ", id: " + headerId,
-                        Toast.LENGTH_SHORT).show();
-              }
-            });
+        new StickyRecyclerHeadersTouchListener.OnHeaderClickListener() {
+          @Override
+          public void onHeaderClick(View header, int position, long headerId) {
+            Toast.makeText(MainActivity.this, "Header position: " + position + ", id: " + headerId,
+                Toast.LENGTH_SHORT).show();
+          }
+        });
     recyclerView.addOnItemTouchListener(touchListener);
     recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
       @Override
@@ -117,11 +117,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private class AnimalsHeadersAdapter extends AnimalsAdapter<RecyclerView.ViewHolder>
-          implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+      implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view = LayoutInflater.from(parent.getContext())
-              .inflate(R.layout.view_item, parent, false);
+          .inflate(R.layout.view_item, parent, false);
       return new RecyclerView.ViewHolder(view) {
       };
     }
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
       View view = LayoutInflater.from(parent.getContext())
-              .inflate(R.layout.view_header, parent, false);
+          .inflate(R.layout.view_header, parent, false);
       return new RecyclerView.ViewHolder(view) {
       };
     }
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     private int getRandomColor() {
       SecureRandom rgen = new SecureRandom();
       return Color.HSVToColor(150, new float[]{
-              rgen.nextInt(359), 1, 1
+          rgen.nextInt(359), 1, 1
       });
     }
 
