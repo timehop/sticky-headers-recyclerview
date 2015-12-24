@@ -88,7 +88,7 @@ Item animators don't play nicely with RecyclerView decorations, so your mileage 
 Compatibility
 -------------
 
-This should work in API 14+.
+API 11+
 
 Known Issues
 ------------
@@ -101,6 +101,8 @@ Known Issues
 
 Version History
 ---------------
+0.4.3 (12/24/2015) - Change minSDK to 11, fix issue with header bounds caching
+
 0.4.2 (8/21/2015) - Add support for reverse `ReverseLayout` in `LinearLayoutManager` by [AntonPukhonin](https://github.com/AntonPukhonin)
 
 0.4.1 (6/24/2015) - Fix "dancing headers" by DarkJaguar91
