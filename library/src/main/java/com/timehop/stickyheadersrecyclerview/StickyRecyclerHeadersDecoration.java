@@ -140,8 +140,8 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
    * Gets the header view for the associated position.  If it doesn't exist yet, it will be
    * created, measured, and laid out.
    *
-   * @param parent
-   * @param position
+   * @param parent the recyclerview
+   * @param position the position to get the header view for
    * @return Header view
    */
   public View getHeaderView(RecyclerView parent, int position) {

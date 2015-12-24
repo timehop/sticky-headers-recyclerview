@@ -68,7 +68,6 @@ public class HeaderPositionCalculator {
    * @param position of the list item in questions
    * @param isReverseLayout TRUE if layout manager has flag isReverseLayout
    * @return true if this item has a different header than the previous item in the list
-   * @see {@link StickyRecyclerHeadersAdapter#getHeaderId(int)}
    */
   public boolean hasNewHeader(int position, boolean isReverseLayout) {
     if (indexOutOfBounds(position)) {
