@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ import java.security.SecureRandom;
 
 public class MainActivity extends AppCompatActivity {
 
+  private static final int NUM_COLUMNS = 3;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -35,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Set adapter populated with example dummy data
     final AnimalsHeadersAdapter adapter = new AnimalsHeadersAdapter();
-    adapter.add("Animals below!");
+    adapter.setNumColumns(NUM_COLUMNS);
+//    adapter.add("Animals below!");
     adapter.addAll(getDummyDataSet());
     recyclerView.setAdapter(adapter);
 
@@ -58,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Set layout manager
     int orientation = getLayoutManagerOrientation(getResources().getConfiguration().orientation);
-    final LinearLayoutManager layoutManager = new LinearLayoutManager(this, orientation, isReverseButton.isChecked());
+//    final LinearLayoutManager layoutManager = new LinearLayoutManager(this, orientation, isReverseButton.isChecked());
+
+    final GridLayoutManager layoutManager = new GridLayoutManager(this, NUM_COLUMNS);
     recyclerView.setLayoutManager(layoutManager);
 
     // Add the sticky headers decoration
@@ -118,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
   private class AnimalsHeadersAdapter extends AnimalsAdapter<RecyclerView.ViewHolder>
       implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+    private int numColumns = 1;
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view = LayoutInflater.from(parent.getContext())
@@ -163,5 +171,13 @@ public class MainActivity extends AppCompatActivity {
       });
     }
 
+    @Override
+    public int getNumColumns() {
+      return numColumns;
+    }
+
+    public void setNumColumns(int numColumns) {
+      this.numColumns = numColumns;
+    }
   }
 }

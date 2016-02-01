@@ -74,6 +74,13 @@ public class HeaderPositionCalculator {
       return false;
     }
 
+    int numColumns = mAdapter.getNumColumns();
+    int columnOfItem = position % numColumns;
+    if (columnOfItem > 0) {
+      int firstItemOnRowPosition = position - columnOfItem;
+      return hasNewHeader(firstItemOnRowPosition, isReverseLayout);
+    }
+
     long headerId = mAdapter.getHeaderId(position);
 
     if (headerId < 0) {
