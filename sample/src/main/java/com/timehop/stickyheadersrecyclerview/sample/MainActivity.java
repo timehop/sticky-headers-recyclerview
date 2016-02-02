@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
 import java.security.SecureRandom;
+import java.util.Collection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -124,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
   private class AnimalsHeadersAdapter extends AnimalsAdapter<RecyclerView.ViewHolder>
       implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
-    private int numColumns = 1;
+      private static final String EMPTY_NAME = " ";
+      private int numColumns = 1;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -142,11 +145,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public long getHeaderId(int position) {
-      if (position == 0) {
-        return -1;
-      } else {
-        return getItem(position).charAt(0);
-      }
+        int numColumnOfItem = position % numColumns;
+        if (numColumnOfItem == 0) {
+            return getFirstChar(getItem(position));
+        } else {
+            return getHeaderId(position - numColumnOfItem);
+        }
     }
 
     @Override
@@ -179,5 +183,71 @@ public class MainActivity extends AppCompatActivity {
     public void setNumColumns(int numColumns) {
       this.numColumns = numColumns;
     }
+
+      @Override
+      public void add(int index, String object) {
+          super.add(index, object);
+          reorderItems();
+      }
+
+      @Override
+      public void add(String object) {
+          super.add(object);
+          reorderItems();
+      }
+
+      @Override
+      public void addAll(Collection<? extends String> collection) {
+          super.addAll(collection);
+          reorderItems();
+      }
+
+      @Override
+      public void addAll(String... items) {
+          super.addAll(items);
+          reorderItems();
+      }
+
+      @Override
+      public void remove(String object) {
+          super.remove(object);
+          reorderItems();
+      }
+
+      private void reorderItems() {
+        long firstCharOnLastItem = -1;
+
+        for (int i = 0; i < items.size(); i++) {
+            String item = items.get(i);
+            if (getFirstChar(item) != firstCharOnLastItem) { // new header found for item
+                int numColumnOfItem = i % numColumns;
+                if (numColumnOfItem > 0 && !EMPTY_NAME.equals(item)) { // fill row with empty items
+                    int emptyVideos = numColumns - numColumnOfItem;
+                    for (int j = 0; j < emptyVideos; j++) {
+                        items.add(i, EMPTY_NAME);
+                        if (j != emptyVideos - 1) {
+                            i++;
+                        }
+                    }
+                    continue;
+                } else if (numColumnOfItem == 0 && EMPTY_NAME.equals(item)){
+                    // remove empty items to avoid empty rows when removing items
+                    while (items.get(i).equals(EMPTY_NAME)) {
+                        items.remove(i);
+                    }
+                    i--;
+                }
+                firstCharOnLastItem = getFirstChar(item);
+            }
+        }
+      }
+
+      private int getFirstChar(String name) {
+          if (TextUtils.isEmpty(name)) {
+              return 0;
+          } else {
+              return name.charAt(0);
+          }
+      }
   }
 }

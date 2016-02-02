@@ -17,6 +17,7 @@
         <item>Airedale Terrier</item>
         <item>Akbash</item>
         <item>Akita</item>
+        <item>Akita</item>
         <item>Alaskan Malamute</item>
         <item>Albatross</item>
         <item>Aldabra Giant Tortoise</item>
@@ -205,9 +206,12 @@
         <item>Egyptian Mau</item>
         <item>Electric Eel</item>
         <item>Elephant</item>
+        <item>Elephant Seal</item>
+        <item>Elephant Shrew</item>
         <item>Emperor Penguin</item>
         <item>Emperor Tamarin</item>
         <item>Emu</item>
+        <item>English Cocker Spaniel</item>
         <item>English Shepherd</item>
         <item>English Springer Spaniel</item>
         <item>Entlebucher Mountain Dog</item>
@@ -220,6 +224,7 @@
         <item>Field Spaniel</item>
         <item>Fin Whale</item>
         <item>Finnish Spitz</item>
+        <item>Fire-Bellied Toad</item>
         <item>Fish</item>
         <item>Fishing Cat</item>
         <item>Flamingo</item>
@@ -242,6 +247,8 @@
         <item>Gentoo Penguin</item>
         <item>Geoffroys Tamarin</item>
         <item>Gerbil</item>
+        <item>German Pinscher</item>
+        <item>German Shepherd</item>
         <item>Gharial</item>
         <item>Giant African Land Snail</item>
         <item>Giant Clam</item>
@@ -287,6 +294,8 @@
         <item>Himalayan</item>
         <item>Hippopotamus</item>
         <item>Honey Bee</item>
+        <item>Horn Shark</item>
+        <item>Horned Frog</item>
         <item>Horse</item>
         <item>Horseshoe Crab</item>
         <item>Howler Monkey</item>
@@ -302,6 +311,7 @@
         <item>Indian Elephant</item>
         <item>Indian Palm Squirrel</item>
         <item>Indian Rhinoceros</item>
+        <item>Indian Star Tortoise</item>
         <item>Indochinese Tiger</item>
         <item>Indri</item>
         <item>Insect</item>
@@ -311,12 +321,16 @@
         <item>Jackal</item>
         <item>Jaguar</item>
         <item>Japanese Chin</item>
+        <item>Japanese Macaque</item>
+        <item>Javan Rhinoceros</item>
         <item>Javanese</item>
         <item>Jellyfish</item>
         <item>Kakapo</item>
         <item>Kangaroo</item>
         <item>Keel Billed Toucan</item>
         <item>Killer Whale</item>
+        <item>King Crab</item>
+        <item>King Penguin</item>
         <item>Kingfisher</item>
         <item>Kiwi</item>
         <item>Koala</item>
@@ -332,6 +346,7 @@
         <item>Leopard Cat</item>
         <item>Leopard Seal</item>
         <item>Leopard Tortoise</item>
+        <item>Liger</item>
         <item>Lion</item>
         <item>Lionfish</item>
         <item>Little Penguin</item>
@@ -367,6 +382,8 @@
         <item>Monitor Lizard</item>
         <item>Monkey</item>
         <item>Monte Iberia Eleuth</item>
+        <item>Moorhen</item>
+        <item>Moose</item>
         <item>Moray Eel</item>
         <item>Moth</item>
         <item>Mountain Gorilla</item>
@@ -390,6 +407,7 @@
         <item>Opossum</item>
         <item>Orang-utan</item>
         <item>Ostrich</item>
+        <item>Otter</item>
         <item>Oyster</item>
         <item>Pademelon</item>
         <item>Panther</item>
@@ -399,6 +417,8 @@
         <item>Pekingese</item>
         <item>Pelican</item>
         <item>Penguin</item>
+        <item>Persian</item>
+        <item>Pheasant</item>
         <item>Pied Tamarin</item>
         <item>Pig</item>
         <item>Pika</item>
@@ -426,6 +446,7 @@
         <item>Pygmy Marmoset</item>
         <item>Quail</item>
         <item>Quetzal</item>
+        <item>Quokka</item>
         <item>Quoll</item>
         <item>Rabbit</item>
         <item>Raccoon</item>
@@ -435,6 +456,7 @@
         <item>Rat</item>
         <item>Rattlesnake</item>
         <item>Red Knee Tarantula</item>
+        <item>Red Panda</item>
         <item>Red Wolf</item>
         <item>Red-handed Tamarin</item>
         <item>Reindeer</item>
@@ -455,6 +477,7 @@
         <item>Saola</item>
         <item>Scorpion</item>
         <item>Scorpion Fish</item>
+        <item>Sea Dragon</item>
         <item>Sea Lion</item>
         <item>Sea Otter</item>
         <item>Sea Slug</item>
@@ -520,6 +543,8 @@
         <item>Tiffany</item>
         <item>Tiger</item>
         <item>Tiger Salamander</item>
+        <item>Tiger Shark</item>
+        <item>Tortoise</item>
         <item>Toucan</item>
         <item>Tree Frog</item>
         <item>Tropicbird</item>
@@ -559,6 +584,7 @@
         <item>Woolly Mammoth</item>
         <item>Woolly Monkey</item>
         <item>Wrasse</item>
+        <item>X-Ray Tetra</item>
         <item>Yak</item>
         <item>Yellow-Eyed Penguin</item>
         <item>Yorkshire Terrier</item>
