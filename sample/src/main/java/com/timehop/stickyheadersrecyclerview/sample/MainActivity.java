@@ -237,7 +237,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     i--;
                 }
-                firstCharOnLastItem = getFirstChar(item);
+                if (!EMPTY_NAME.equals(item)) {
+                    firstCharOnLastItem = getFirstChar(item);
+                }
             }
         }
       }
