@@ -17,7 +17,7 @@ import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
 public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
 
   private final StickyRecyclerHeadersAdapter mAdapter;
-  private final StickyRecyclerHeadersVisibleAdapter mVisibilityAdapter;
+  private final ItemVisibilityAdapter mVisibilityAdapter;
   private final SparseArray<Rect> mHeaderRects = new SparseArray<>();
   private final HeaderProvider mHeaderProvider;
   private final OrientationProvider mOrientationProvider;
@@ -36,18 +36,18 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     this(adapter, new LinearLayoutOrientationProvider(), new DimensionCalculator(), null);
   }
 
-  public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, StickyRecyclerHeadersVisibleAdapter visibilityAdapter) {
+  public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, ItemVisibilityAdapter visibilityAdapter) {
     this(adapter, new LinearLayoutOrientationProvider(), new DimensionCalculator(), visibilityAdapter);
   }
 
   private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
-      DimensionCalculator dimensionCalculator, StickyRecyclerHeadersVisibleAdapter visibilityAdapter) {
+      DimensionCalculator dimensionCalculator, ItemVisibilityAdapter visibilityAdapter) {
     this(adapter, orientationProvider, dimensionCalculator, new HeaderRenderer(orientationProvider),
         new HeaderViewCache(adapter, orientationProvider), visibilityAdapter);
   }
 
   private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
-      DimensionCalculator dimensionCalculator, HeaderRenderer headerRenderer, HeaderProvider headerProvider, StickyRecyclerHeadersVisibleAdapter visibilityAdapter) {
+      DimensionCalculator dimensionCalculator, HeaderRenderer headerRenderer, HeaderProvider headerProvider, ItemVisibilityAdapter visibilityAdapter) {
     this(adapter, headerRenderer, orientationProvider, dimensionCalculator, headerProvider,
         new HeaderPositionCalculator(adapter, headerProvider, orientationProvider,
             dimensionCalculator), visibilityAdapter);
@@ -55,7 +55,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
 
   private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, HeaderRenderer headerRenderer,
       OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator, HeaderProvider headerProvider,
-      HeaderPositionCalculator headerPositionCalculator, StickyRecyclerHeadersVisibleAdapter visibilityAdapter) {
+      HeaderPositionCalculator headerPositionCalculator, ItemVisibilityAdapter visibilityAdapter) {
     mAdapter = adapter;
     mHeaderProvider = headerProvider;
     mOrientationProvider = orientationProvider;
