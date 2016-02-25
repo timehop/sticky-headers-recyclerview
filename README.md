@@ -83,7 +83,9 @@ The StickyHeaders aren't aware of your adapter so if you must notify them when y
     });
 ```
 
-If the Reccylerview's layout manager implements getExtraLayoutSpace (to preload more content then is visible for preformance resaons), you must implment ItemVisibilityAdapter and pass an instance as a second argment to StickyRecyclerHeadersDecoration's constuctor.
+If the Recyclerview's layout manager implements getExtraLayoutSpace (to preload more content then is
+visible for performance reasons), you must implement ItemVisibilityAdapter and pass an instance as a
+second argument to StickyRecyclerHeadersDecoration's constructor.
 ```java
     @Override
     public boolean isPositionVisible(final int position) {
