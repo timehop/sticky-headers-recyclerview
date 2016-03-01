@@ -229,13 +229,13 @@ public class HeaderPositionCalculator {
     if (orientation == LinearLayoutManager.VERTICAL) {
       int itemTop = item.getTop() - layoutParams.topMargin;
       int headerBottom = getListTop(parent) + header.getBottom() + mTempRect1.bottom + mTempRect1.top;
-      if (itemTop > headerBottom) {
+      if (itemTop >= headerBottom) {
         return false;
       }
     } else {
       int itemLeft = item.getLeft() - layoutParams.leftMargin;
       int headerRight = getListLeft(parent) + header.getRight() + mTempRect1.right + mTempRect1.left;
-      if (itemLeft > headerRight) {
+      if (itemLeft >= headerRight) {
         return false;
       }
     }
