@@ -30,7 +30,7 @@ and `StickyRecyclerHeadersTouchListener`.
 `StickyRecyclerHeadersAdapter` has a very similar interface to the `RecyclerView.Adapter`, and it
 is recommended that you make your `RecyclerView.Adapter` implement `StickyRecyclerHeadersAdapter`.
 
-There interface looks like this:
+The interface looks like this:
 
 ```java
 public interface StickyRecyclerHeadersAdapter<VH extends RecyclerView.ViewHolder> {
@@ -83,7 +83,7 @@ The StickyHeaders aren't aware of your adapter so if you must notify them when y
     });
 ```
 
-If the Recyclerview's layout manager implements getExtraLayoutSpace (to preload more content then is
+If the Recyclerview's layout manager implements getExtraLayoutSpace (to preload more content than is
 visible for performance reasons), you must implement ItemVisibilityAdapter and pass an instance as a
 second argument to StickyRecyclerHeadersDecoration's constructor.
 ```java
