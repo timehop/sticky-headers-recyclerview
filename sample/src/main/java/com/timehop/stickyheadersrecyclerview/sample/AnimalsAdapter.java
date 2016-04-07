@@ -12,7 +12,7 @@ import java.util.Collection;
  */
 public abstract class AnimalsAdapter<VH extends RecyclerView.ViewHolder>
     extends RecyclerView.Adapter<VH> {
-  private ArrayList<String> items = new ArrayList<String>();
+  protected ArrayList<String> items = new ArrayList<String>();
 
   public AnimalsAdapter() {
     setHasStableIds(true);

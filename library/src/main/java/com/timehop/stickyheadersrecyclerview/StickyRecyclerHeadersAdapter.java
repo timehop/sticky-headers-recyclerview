@@ -36,4 +36,10 @@ public interface StickyRecyclerHeadersAdapter<VH extends RecyclerView.ViewHolder
    * @return the number of views in the adapter
    */
   int getItemCount();
+
+
+  /**
+   * @return the number of columns
+   */
+  int getNumColumns();
 }
