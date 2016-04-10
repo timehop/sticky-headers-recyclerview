@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -46,6 +48,11 @@ public abstract class AnimalsAdapter<VH extends RecyclerView.ViewHolder>
 
   public void remove(String object) {
     items.remove(object);
+    notifyDataSetChanged();
+  }
+
+  public void sort(Comparator<String> comparator) {
+    Collections.sort(items, comparator);
     notifyDataSetChanged();
   }
 
