@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
     touchListener.setOnHeaderClickListener(
         new StickyRecyclerHeadersTouchListener.OnHeaderClickListener() {
           @Override
-          public void onHeaderClick(View header, int position, long headerId) {
-            Toast.makeText(MainActivity.this, "Header position: " + position + ", id: " + headerId,
+          public void onHeaderClick(View header, int position, long headerId, boolean currentSticky) {
+            Toast.makeText(MainActivity.this, "Header position: " + position + ", id: " + headerId +", stick: "+ currentSticky,
                 Toast.LENGTH_SHORT).show();
           }
         });
