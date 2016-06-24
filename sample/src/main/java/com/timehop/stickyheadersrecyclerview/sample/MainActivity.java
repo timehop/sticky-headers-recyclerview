@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.timehop.stickyheadersrecyclerview.HeaderPositionCalculator;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
@@ -63,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
 
     // Add the sticky headers decoration
     final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(adapter);
+    headersDecor.setOnStickHeaderChangedListener(
+            new HeaderPositionCalculator.StickHeaderChangedListerner() {
+              @Override
+              public void onStickHeaderChanged(View newHeader, View oldHeader) {
+
+              }
+            });
     recyclerView.addItemDecoration(headersDecor);
 
     // Add decoration for dividers between list items
