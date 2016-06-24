@@ -13,7 +13,7 @@ public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTo
   private OnHeaderClickListener mOnHeaderClickListener;
 
   public interface OnHeaderClickListener {
-    void onHeaderClick(View header, int position, long headerId);
+    void onHeaderClick(View header, int position, long headerId, boolean currentSticky);
   }
 
   public StickyRecyclerHeadersTouchListener(final RecyclerView recyclerView,
@@ -68,7 +68,19 @@ public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTo
       if (position != -1) {
         View headerView = mDecor.getHeaderView(mRecyclerView, position);
         long headerId = getAdapter().getHeaderId(position);
-        mOnHeaderClickListener.onHeaderClick(headerView, position, headerId);
+
+        float recylerX = mRecyclerView.getX();
+        float recylerY = mRecyclerView.getY();
+
+        float headerWidth = headerView.getWidth();
+        float headerHeight = headerView.getHeight();
+
+        boolean sticky = false;
+        if (e.getX() - recylerX <= headerWidth && e.getY() - recylerY < headerHeight) {
+          sticky = true;
+        }
+
+        mOnHeaderClickListener.onHeaderClick(headerView, position, headerId, sticky);
         mRecyclerView.playSoundEffect(SoundEffectConstants.CLICK);
         headerView.onTouchEvent(e);
         return true;

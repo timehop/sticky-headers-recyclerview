@@ -65,6 +65,18 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     mVisibilityAdapter = visibilityAdapter;
   }
 
+  /**
+   * set listener for stick-headers' changed events
+   *
+   * @param listener
+     */
+  public void setOnStickHeaderChangedListener(
+          HeaderPositionCalculator.StickHeaderChangedListerner listener) {
+    if (null != mHeaderPositionCalculator) {
+      mHeaderPositionCalculator.setHeaderChangedListener(listener);
+    }
+  }
+
   @Override
   public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);

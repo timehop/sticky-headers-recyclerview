@@ -37,6 +37,18 @@ public class HeaderPositionCalculator {
   }
 
   /**
+   * Listener for stick-headers' changing events
+   */
+  public interface StickHeaderChangedListerner {
+    void onStickHeaderChanged(View newHeader,View oldHeader);
+
+  }
+  private StickHeaderChangedListerner mListener;
+  public void setHeaderChangedListener(StickHeaderChangedListerner listener) {
+    this.mListener = listener;
+  }
+
+  /**
    * Determines if a view should have a sticky header.
    * The view has a sticky header if:
    * 1. It is the first element in the recycler view
@@ -105,6 +117,12 @@ public class HeaderPositionCalculator {
       translateHeaderWithNextHeader(recyclerView, mOrientationProvider.getOrientation(recyclerView), bounds,
           header, viewAfterNextHeader, secondHeader);
     }
+
+    if(firstHeader && !isStickyHeaderBeingPushedOffscreen(recyclerView,header)){
+      if(null!=mListener){
+        mListener.onStickHeaderChanged(header, null);
+      }
+    }
   }
 
   private void initDefaultHeaderOffset(Rect headerMargins, RecyclerView recyclerView, View header, View firstView, int orientation) {
@@ -153,13 +171,29 @@ public class HeaderPositionCalculator {
         int topOfNextHeader = viewAfterHeader.getTop() - mTempRect1.bottom - nextHeader.getHeight() - mTempRect1.top;
         int bottomOfThisHeader = recyclerView.getPaddingTop() + stickyHeader.getBottom() + mTempRect2.top + mTempRect2.bottom;
         if (topOfNextHeader < bottomOfThisHeader) {
+          if (null != mListener) {
+            mListener.onStickHeaderChanged(nextHeader, stickyHeader);
+          }
+
           return true;
+        }else{
+          if (null != mListener) {
+            mListener.onStickHeaderChanged(stickyHeader, nextHeader);
+          }
         }
       } else {
         int leftOfNextHeader = viewAfterHeader.getLeft() - mTempRect1.right - nextHeader.getWidth() - mTempRect1.left;
         int rightOfThisHeader = recyclerView.getPaddingLeft() + stickyHeader.getRight() + mTempRect2.left + mTempRect2.right;
         if (leftOfNextHeader < rightOfThisHeader) {
+          if (null != mListener) {
+            mListener.onStickHeaderChanged(nextHeader, stickyHeader);
+          }
+
           return true;
+        }else{
+          if (null != mListener) {
+            mListener.onStickHeaderChanged(stickyHeader, nextHeader);
+          }
         }
       }
     }
