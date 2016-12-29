@@ -143,15 +143,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-      View view = LayoutInflater.from(parent.getContext())
+      final View view = LayoutInflater.from(parent.getContext())
           .inflate(R.layout.view_header, parent, false);
+      view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Toast.makeText(v.getContext(), "button"+v.getTag(), Toast.LENGTH_SHORT).show();
+        }
+      });
       return new RecyclerView.ViewHolder(view) {
       };
     }
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-      TextView textView = (TextView) holder.itemView;
+      holder.itemView.findViewById(R.id.btn).setTag(position);
+      TextView textView = (TextView) holder.itemView.findViewById(R.id.tv);
       textView.setText(String.valueOf(getItem(position).charAt(0)));
       holder.itemView.setBackgroundColor(getRandomColor());
     }

@@ -165,4 +165,9 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     mHeaderProvider.invalidate();
     mHeaderRects.clear();
   }
+
+  public Rect getHeaderRect(int position) {
+    return mHeaderRects.get(position);
+  }
+
 }

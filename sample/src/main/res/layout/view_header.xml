@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TextView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="#001F3F"
-    android:textSize="28sp"
-    android:textStyle="bold"
-    android:textColor="@android:color/white"
-    tools:text="Animals starting with A"
-    tools:context=".MainActivity"/>
+    android:background="#001F3F">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        tools:context=".MainActivity"
+        tools:text="Animals starting with A"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="button"/>
+
+</RelativeLayout>
