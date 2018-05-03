@@ -21,7 +21,7 @@ Download
 
 Current version: [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.timehop.stickyheadersrecyclerview/library/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.timehop.stickyheadersrecyclerview/library)
 
-    compile 'com.timehop.stickyheadersrecyclerview:library:[latest.version.number]@aar'
+    implementation 'com.timehop.stickyheadersrecyclerview:library:[latest.version.number]@aar'
 
 
 Usage
