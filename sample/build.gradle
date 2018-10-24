@@ -14,12 +14,12 @@ android {
         versionName rootProject.ext.versionName as String
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     compile project(':library')
-    compile "com.android.support:appcompat-v7:${rootProject.supportLibsVersion}"
+    compile 'androidx.appcompat:appcompat:1.0.0'
 }

@@ -2,12 +2,13 @@ package com.timehop.stickyheadersrecyclerview.rendering;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.timehop.stickyheadersrecyclerview.calculation.DimensionCalculator;
 import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Responsible for drawing headers to the canvas provided by the item decoration
