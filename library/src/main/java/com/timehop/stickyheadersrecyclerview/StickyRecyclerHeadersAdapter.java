@@ -1,7 +1,8 @@
 package com.timehop.stickyheadersrecyclerview;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public interface StickyRecyclerHeadersAdapter<VH extends RecyclerView.ViewHolder> {
   /**

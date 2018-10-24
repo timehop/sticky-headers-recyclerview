@@ -2,10 +2,15 @@
 
 buildscript {
     repositories {
+        google() // here
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:3.2.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -14,16 +19,21 @@ buildscript {
 
 allprojects {
     repositories {
+        google() // here
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
         jcenter()
     }
 }
 
 ext {
-    compileSdkVersion = 23
-    buildToolsVersion = '23.0.2'
-    supportLibsVersion = '23.1.1'
-    targetSdkVersion = 22
-    minSdkVersion = 11
-    versionCode = 13
-    versionName = "0.4.3"
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.3'
+    supportLibsVersion = '28.0.0'
+    targetSdkVersion = 28
+    minSdkVersion = 14
+    versionCode = 14
+    versionName = "0.4.4"
 }

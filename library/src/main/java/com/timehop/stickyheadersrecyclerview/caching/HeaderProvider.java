@@ -1,7 +1,8 @@
 package com.timehop.stickyheadersrecyclerview.caching;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Implemented by objects that provide header views for decoration

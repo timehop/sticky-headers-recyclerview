@@ -2,8 +2,6 @@ package com.timehop.stickyheadersrecyclerview;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 
@@ -13,6 +11,9 @@ import com.timehop.stickyheadersrecyclerview.calculation.DimensionCalculator;
 import com.timehop.stickyheadersrecyclerview.rendering.HeaderRenderer;
 import com.timehop.stickyheadersrecyclerview.util.LinearLayoutOrientationProvider;
 import com.timehop.stickyheadersrecyclerview.util.OrientationProvider;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
 
